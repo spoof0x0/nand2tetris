@@ -1,0 +1,15 @@
+/**
+ * And gate:
+ * if (a and b) out = 1, else out = 0 
+ */
+
+
+CHIP And {
+    IN a, b;
+    OUT out;
+    
+    PARTS:
+    Nand(a=a , b=b , out=nandOut );
+   // Nand(a=nandOut , b=nandOut , out=out );
+   Not(in=nandOut , out=out );
+}
