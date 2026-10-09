@@ -42,15 +42,6 @@ def command_type(command):
         return "C_ARITHMETIC"
     else:
         raise ValueError(f"Unknown VM command: {command}")
-    
-    # if command in ["push", "pop"]:
-    #     return "C_PUSH" if command == "push" else "C_POP"
-    # elif command in ["label", "goto", "if-goto"]:
-    #     return "C_LABEL" if command == "label" else ("C_GOTO" if command == "goto" else "C_IF")
-    # elif command in ["function", "call", "return"]:
-    #     return "C_FUNCTION" if command == "function" else ("C_CALL" if command == "call" else "C_RETURN")
-    # else:
-    #     return "C_ARITHMETIC"
 
 
 arithmetic_assembly = {
@@ -191,16 +182,6 @@ def translate_return():
     )
     return assembly_code
 
-
-
-
-
-
-
-
-
-
-
 def write_arithmetic(command, asm_file):
     assembly_code = translate_arithmetic(command)
     asm_file.write(assembly_code)
@@ -238,12 +219,6 @@ def write_function_call_return(command, function_name, num, asm_file):
         raise ValueError(f"Invalid function command: {command}")
 
     asm_file.write(assembly_code)
-
-
-
-
-
-
 
 path = input("Enter the path of the .vm file or directory: ").strip().strip('"')
 
