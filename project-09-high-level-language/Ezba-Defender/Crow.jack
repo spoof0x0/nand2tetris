@@ -1,0 +1,82 @@
+/**
+ * Crow (Ghorab): flies to a crop and pecks at it until the farmer hits it.
+ */
+class Crow {
+    field int x, y;
+    field int flap;          // wing animation frame (0 or 1)
+    field int target;        // index of the crop it is after
+    field boolean alive;
+
+    constructor Crow new() {
+        let x = 0;
+        let y = 16;
+        let flap = 0;
+        let target = 0;
+        let alive = false;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Brings the crow to life at (ax, ay), heading for crop number t. */
+    method void spawn(int ax, int ay, int t) {
+        let x = ax;
+        let y = ay;
+        let target = t;
+        let alive = true;
+        return;
+    }
+
+    method boolean isAlive() { return alive; }
+    method void kill() { let alive = false; return; }
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method int getTarget() { return target; }
+    method void setTarget(int t) { let target = t; return; }
+
+    method boolean atTarget(int tx, int ty) {
+        return (Math.abs(x - tx) < 6) & (Math.abs(y - ty) < 6);
+    }
+
+    /** Flies toward (tx, ty); jit (-1, 0 or 1) adds a little wobble. */
+    method void moveToward(int tx, int ty, int jit) {
+        let flap = 1 - flap;
+        if (x < (tx - 1)) { let x = x + 2; }
+        if (x > (tx + 1)) { let x = x - 2; }
+        if (y < (ty - 1)) { let y = y + 2; }
+        if (y > (ty + 1)) { let y = y - 2; }
+        let y = y + jit;
+        if (x < 0) { let x = 0; }
+        if (x > 496) { let x = 496; }
+        if (y < 16) { let y = 16; }
+        if (y > 200) { let y = 200; }
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + 12, y + 8);
+        return;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        // body, head, beak and tail
+        do Screen.drawRectangle(x + 2, y + 3, x + 8, y + 6);
+        do Screen.drawRectangle(x + 8, y + 2, x + 10, y + 4);
+        do Screen.drawLine(x + 10, y + 3, x + 12, y + 3);
+        do Screen.drawLine(x, y + 4, x + 2, y + 4);
+        // wings flap up and down
+        if (flap = 0) {
+            do Screen.drawLine(x + 3, y + 3, x + 1, y);
+            do Screen.drawLine(x + 6, y + 3, x + 8, y);
+        } else {
+            do Screen.drawLine(x + 3, y + 6, x + 1, y + 8);
+            do Screen.drawLine(x + 6, y + 6, x + 8, y + 8);
+        }
+        return;
+    }
+}

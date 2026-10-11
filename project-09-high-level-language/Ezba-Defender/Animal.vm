@@ -1,0 +1,505 @@
+function Animal.new 0
+    push constant 8
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push argument 2
+    pop this 5
+    push argument 3
+    pop this 6
+    push constant 1
+    pop this 2
+    push constant 0
+    pop this 3
+    push constant 12
+    pop this 4
+    push constant 0
+    pop this 7
+    push pointer 0
+    return
+function Animal.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function Animal.getX 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Animal.getY 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function Animal.isAlive 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 2
+    lt
+    return
+function Animal.isHealthy 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    return
+function Animal.isPoisoned 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    return
+function Animal.poison 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    not
+    if-goto Animal_1
+    push constant 1
+    pop this 3
+    push constant 12
+    pop this 4
+    goto Animal_0
+label Animal_1
+label Animal_0
+    push constant 0
+    return
+function Animal.cure 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto Animal_3
+    push constant 0
+    pop this 3
+    push constant 12
+    pop this 4
+    goto Animal_2
+label Animal_3
+label Animal_2
+    push constant 0
+    return
+function Animal.tick 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto Animal_5
+    push this 4
+    push constant 1
+    sub
+    pop this 4
+    push this 4
+    push constant 1
+    lt
+    not
+    if-goto Animal_7
+    push constant 2
+    pop this 3
+    goto Animal_6
+label Animal_7
+label Animal_6
+    goto Animal_4
+label Animal_5
+label Animal_4
+    push constant 0
+    return
+function Animal.move 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    not
+    if-goto Animal_9
+    push this 7
+    push constant 1
+    add
+    pop this 7
+    push this 7
+    push constant 1
+    and
+    push constant 0
+    eq
+    not
+    if-goto Animal_11
+    push this 0
+    push this 2
+    add
+    pop this 0
+    goto Animal_10
+label Animal_11
+label Animal_10
+    push this 0
+    push this 6
+    gt
+    not
+    if-goto Animal_13
+    push constant 1
+    neg
+    pop this 2
+    goto Animal_12
+label Animal_13
+label Animal_12
+    push this 0
+    push this 5
+    lt
+    not
+    if-goto Animal_15
+    push constant 1
+    pop this 2
+    goto Animal_14
+label Animal_15
+label Animal_14
+    push argument 1
+    push constant 0
+    eq
+    not
+    if-goto Animal_17
+    push this 2
+    neg
+    pop this 2
+    goto Animal_16
+label Animal_17
+label Animal_16
+    goto Animal_8
+label Animal_9
+label Animal_8
+    push constant 0
+    return
+function Animal.erase 0
+    push argument 0
+    pop pointer 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 1
+    sub
+    push this 1
+    push constant 10
+    sub
+    push this 0
+    push constant 21
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Animal.draw 1
+    push argument 0
+    pop pointer 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 3
+    push constant 2
+    eq
+    not
+    if-goto Animal_19
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 7
+    add
+    push this 0
+    push constant 18
+    add
+    push this 1
+    push constant 11
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 7
+    add
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 2
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 9
+    add
+    push this 1
+    push constant 7
+    add
+    push this 0
+    push constant 9
+    add
+    push this 1
+    push constant 3
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 7
+    add
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 3
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 7
+    add
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 2
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Animal_18
+label Animal_19
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 2
+    add
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 8
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 2
+    push constant 0
+    gt
+    not
+    if-goto Animal_21
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 1
+    add
+    push this 0
+    push constant 20
+    add
+    push this 1
+    push constant 5
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 17
+    add
+    push this 1
+    push constant 1
+    add
+    push this 0
+    push constant 17
+    add
+    push this 1
+    push constant 1
+    sub
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 2
+    add
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 6
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Animal_20
+label Animal_21
+    push this 0
+    push this 1
+    push constant 1
+    add
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 5
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 3
+    add
+    push this 1
+    push constant 1
+    add
+    push this 0
+    push constant 3
+    add
+    push this 1
+    push constant 1
+    sub
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 2
+    add
+    push this 0
+    push constant 18
+    add
+    push this 1
+    push constant 6
+    add
+    call Screen.drawLine 4
+    pop temp 0
+label Animal_20
+    push this 7
+    push constant 4
+    call Math.divide 2
+    push constant 1
+    and
+    pop local 0
+    push this 0
+    push constant 6
+    add
+    push local 0
+    add
+    push this 1
+    push constant 8
+    add
+    push this 0
+    push constant 6
+    add
+    push local 0
+    add
+    push this 1
+    push constant 11
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 14
+    add
+    push local 0
+    sub
+    push this 1
+    push constant 8
+    add
+    push this 0
+    push constant 14
+    add
+    push local 0
+    sub
+    push this 1
+    push constant 11
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 7
+    add
+    push this 1
+    push constant 4
+    add
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 5
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 3
+    add
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 4
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto Animal_23
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 8
+    sub
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 3
+    sub
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 1
+    sub
+    call Screen.drawPixel 2
+    pop temp 0
+    goto Animal_22
+label Animal_23
+label Animal_22
+label Animal_18
+    push constant 0
+    return

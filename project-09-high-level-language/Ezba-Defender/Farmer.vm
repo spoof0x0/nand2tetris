@@ -1,0 +1,467 @@
+function Farmer.new 0
+    push constant 7
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push constant 1
+    pop this 2
+    push constant 0
+    pop this 3
+    push constant 0
+    pop this 4
+    push constant 0
+    pop this 5
+    push constant 0
+    pop this 6
+    push pointer 0
+    return
+function Farmer.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function Farmer.move 0
+    push argument 0
+    pop pointer 0
+    push this 6
+    push constant 1
+    add
+    pop this 6
+    push this 0
+    push argument 1
+    push constant 4
+    call Math.multiply 2
+    add
+    pop this 0
+    push this 1
+    push argument 2
+    push constant 4
+    call Math.multiply 2
+    add
+    pop this 1
+    push argument 1
+    push constant 0
+    gt
+    not
+    if-goto Farmer_1
+    push constant 1
+    pop this 2
+    goto Farmer_0
+label Farmer_1
+label Farmer_0
+    push argument 1
+    push constant 0
+    lt
+    not
+    if-goto Farmer_3
+    push constant 1
+    neg
+    pop this 2
+    goto Farmer_2
+label Farmer_3
+label Farmer_2
+    push this 0
+    push constant 20
+    lt
+    not
+    if-goto Farmer_5
+    push constant 20
+    pop this 0
+    goto Farmer_4
+label Farmer_5
+label Farmer_4
+    push this 0
+    push constant 460
+    gt
+    not
+    if-goto Farmer_7
+    push constant 460
+    pop this 0
+    goto Farmer_6
+label Farmer_7
+label Farmer_6
+    push this 1
+    push constant 22
+    lt
+    not
+    if-goto Farmer_9
+    push constant 22
+    pop this 1
+    goto Farmer_8
+label Farmer_9
+label Farmer_8
+    push this 1
+    push constant 214
+    gt
+    not
+    if-goto Farmer_11
+    push constant 214
+    pop this 1
+    goto Farmer_10
+label Farmer_11
+label Farmer_10
+    push constant 0
+    return
+function Farmer.swing 0
+    push argument 0
+    pop pointer 0
+    push this 4
+    push constant 0
+    eq
+    not
+    if-goto Farmer_13
+    push constant 4
+    pop this 3
+    push constant 8
+    pop this 4
+    goto Farmer_12
+label Farmer_13
+label Farmer_12
+    push constant 0
+    return
+function Farmer.startFix 0
+    push argument 0
+    pop pointer 0
+    push constant 6
+    pop this 5
+    push constant 0
+    return
+function Farmer.tick 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    gt
+    not
+    if-goto Farmer_15
+    push this 3
+    push constant 1
+    sub
+    pop this 3
+    goto Farmer_14
+label Farmer_15
+label Farmer_14
+    push this 4
+    push constant 0
+    gt
+    not
+    if-goto Farmer_17
+    push this 4
+    push constant 1
+    sub
+    pop this 4
+    goto Farmer_16
+label Farmer_17
+label Farmer_16
+    push this 5
+    push constant 0
+    gt
+    not
+    if-goto Farmer_19
+    push this 5
+    push constant 1
+    sub
+    pop this 5
+    goto Farmer_18
+label Farmer_19
+label Farmer_18
+    push constant 0
+    return
+function Farmer.isSwinging 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    gt
+    return
+function Farmer.reaches 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    push constant 6
+    add
+    sub
+    call Math.abs 1
+    push constant 30
+    lt
+    push argument 2
+    push this 1
+    push constant 12
+    add
+    sub
+    call Math.abs 1
+    push constant 20
+    lt
+    and
+    return
+function Farmer.near 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    push constant 6
+    add
+    sub
+    call Math.abs 1
+    push constant 30
+    lt
+    push argument 2
+    push this 1
+    push constant 12
+    add
+    sub
+    call Math.abs 1
+    push constant 30
+    lt
+    and
+    return
+function Farmer.erase 0
+    push argument 0
+    pop pointer 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 17
+    sub
+    push this 1
+    push constant 8
+    sub
+    push this 0
+    push constant 29
+    add
+    push this 1
+    push constant 22
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Farmer.draw 2
+    push argument 0
+    pop pointer 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push this 1
+    push constant 3
+    add
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 4
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 3
+    add
+    push this 1
+    push this 0
+    push constant 9
+    add
+    push this 1
+    push constant 3
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 6
+    add
+    push this 1
+    push constant 8
+    add
+    push constant 3
+    call Screen.drawCircle 3
+    pop temp 0
+    push this 0
+    push constant 3
+    add
+    push this 1
+    push constant 12
+    add
+    push this 0
+    push constant 9
+    add
+    push this 1
+    push constant 18
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 6
+    push constant 1
+    and
+    pop local 1
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 18
+    add
+    push this 0
+    push constant 4
+    add
+    push local 1
+    sub
+    push this 1
+    push constant 22
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 18
+    add
+    push this 0
+    push constant 8
+    add
+    push local 1
+    add
+    push this 1
+    push constant 22
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 3
+    push constant 0
+    gt
+    not
+    if-goto Farmer_21
+    push this 0
+    push constant 6
+    add
+    push this 2
+    push constant 4
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 14
+    add
+    push this 0
+    push constant 6
+    add
+    push this 2
+    push constant 22
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 14
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 6
+    add
+    push this 2
+    push constant 22
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 10
+    add
+    push this 0
+    push constant 6
+    add
+    push this 2
+    push constant 22
+    call Math.multiply 2
+    add
+    push this 1
+    push constant 18
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Farmer_20
+label Farmer_21
+    push this 0
+    push constant 6
+    add
+    push this 2
+    push constant 8
+    call Math.multiply 2
+    add
+    pop local 0
+    push local 0
+    push this 1
+    push constant 8
+    add
+    push local 0
+    push this 1
+    push constant 22
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push local 0
+    push constant 2
+    sub
+    push this 1
+    push constant 6
+    add
+    push local 0
+    push constant 2
+    sub
+    push this 1
+    push constant 9
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push local 0
+    push constant 2
+    add
+    push this 1
+    push constant 6
+    add
+    push local 0
+    push constant 2
+    add
+    push this 1
+    push constant 9
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push local 0
+    push constant 2
+    sub
+    push this 1
+    push constant 9
+    add
+    push local 0
+    push constant 2
+    add
+    push this 1
+    push constant 9
+    add
+    call Screen.drawLine 4
+    pop temp 0
+label Farmer_20
+    push this 5
+    push constant 0
+    gt
+    not
+    if-goto Farmer_23
+    push this 0
+    push constant 6
+    add
+    push this 1
+    push constant 4
+    sub
+    push constant 3
+    call Screen.drawCircle 3
+    pop temp 0
+    goto Farmer_22
+label Farmer_23
+label Farmer_22
+    push constant 0
+    return

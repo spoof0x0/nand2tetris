@@ -1,0 +1,155 @@
+/**
+ * EvilFarmer: a villain from a neighbouring farm.
+ * kind: 1 = floods a crop (bucket), 2 = burns a crop (torch), 3 = poisons an animal (bottle).
+ * state: 0 = walking to the target, 1 = sabotaging, 2 = running away.
+ */
+class EvilFarmer {
+    field int x, y;
+    field int kind;
+    field int state;
+    field int timer;         // frames left of the sabotage action
+    field int target;        // index of the crop (kind 1, 2) or animal (kind 3)
+    field int fleeDir;       // -1 = runs off to the left, 1 = to the right
+    field int walk;
+    field boolean alive;
+
+    constructor EvilFarmer new() {
+        let x = 0;
+        let y = 30;
+        let kind = 1;
+        let state = 0;
+        let timer = 0;
+        let target = 0;
+        let fleeDir = 1;
+        let walk = 0;
+        let alive = false;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void spawn(int ax, int ay, int k, int t, int fd) {
+        let x = ax;
+        let y = ay;
+        let kind = k;
+        let target = t;
+        let fleeDir = fd;
+        let state = 0;
+        let timer = 0;
+        let alive = true;
+        return;
+    }
+
+    method boolean isAlive() { return alive; }
+    method void kill() { let alive = false; return; }
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method int getKind() { return kind; }
+    method int getState() { return state; }
+    method int getTarget() { return target; }
+    method void setTarget(int t) { let target = t; return; }
+
+    method boolean atTarget(int tx, int ty) {
+        return (Math.abs(x - tx) < 4) & (Math.abs(y - ty) < 4);
+    }
+
+    method void moveToward(int tx, int ty) {
+        let walk = walk + 1;
+        if (x < (tx - 1)) { let x = x + 2; }
+        if (x > (tx + 1)) { let x = x - 2; }
+        if (y < (ty - 1)) { let y = y + 2; }
+        if (y > (ty + 1)) { let y = y - 2; }
+        if (y < 22) { let y = 22; }
+        if (y > 214) { let y = 214; }
+        return;
+    }
+
+    /** Starts the sabotage action (takes about half a second). */
+    method void startWork() {
+        let state = 1;
+        let timer = 14;
+        return;
+    }
+
+    /** Advances the sabotage action; returns true when it is finished. */
+    method boolean tickWork() {
+        let timer = timer - 1;
+        return timer < 1;
+    }
+
+    method void flee() {
+        let state = 2;
+        return;
+    }
+
+    /** Runs away horizontally; disappears once he leaves the field. */
+    method void moveFlee() {
+        let walk = walk + 1;
+        let x = x + (fleeDir * 3);
+        if (x < 3) { let alive = false; }
+        if (x > 485) { let alive = false; }
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y - 6, x + 17, y + 22);
+        return;
+    }
+
+    method void draw() {
+        var int o;
+        do Screen.setColor(true);
+
+        // hat
+        do Screen.drawRectangle(x + 1, y, x + 11, y + 2);
+        // head with angry white eyes
+        do Screen.drawCircle(x + 6, y + 6, 3);
+        do Screen.setColor(false);
+        do Screen.drawPixel(x + 5, y + 5);
+        do Screen.drawPixel(x + 7, y + 5);
+        do Screen.setColor(true);
+        // body (outline only, so he looks different from the hero)
+        do Screen.drawLine(x + 2, y + 10, x + 10, y + 10);
+        do Screen.drawLine(x + 10, y + 10, x + 10, y + 17);
+        do Screen.drawLine(x + 10, y + 17, x + 2, y + 17);
+        do Screen.drawLine(x + 2, y + 17, x + 2, y + 10);
+        // arm
+        do Screen.drawLine(x + 10, y + 11, x + 13, y + 13);
+        // legs (animated)
+        let o = walk & 1;
+        do Screen.drawLine(x + 4, y + 17, x + 4 + o, y + 21);
+        do Screen.drawLine(x + 8, y + 17, x + 8 - o, y + 21);
+
+        // the tool he carries
+        if (kind = 1) {
+            // bucket (and drips while he is working)
+            do Screen.drawRectangle(x + 13, y + 12, x + 17, y + 16);
+            if (state = 1) {
+                do Screen.drawLine(x + 15, y + 17, x + 15, y + 21);
+            }
+        }
+        if (kind = 2) {
+            // torch
+            do Screen.drawLine(x + 14, y + 14, x + 14, y + 8);
+            if (state = 1) {
+                do Screen.drawCircle(x + 14, y + 6, 3);
+            } else {
+                do Screen.drawCircle(x + 14, y + 6, 2);
+            }
+        }
+        if (kind = 3) {
+            // poison bottle
+            do Screen.drawRectangle(x + 13, y + 11, x + 15, y + 16);
+            do Screen.drawLine(x + 14, y + 8, x + 14, y + 10);
+            if (state = 1) {
+                do Screen.drawPixel(x + 16, y + 8);
+                do Screen.drawPixel(x + 12, y + 7);
+            }
+        }
+        return;
+    }
+}

@@ -1,0 +1,2961 @@
+function Main.main 1
+    push constant 1234
+    pop static 15
+    push constant 0
+    pop static 14
+    push constant 6
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    pop static 16
+    push constant 8
+    call String.new 1
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 80
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    pop static 17
+    push constant 9
+    call String.new 1
+    push constant 47
+    call String.appendChar 2
+    push constant 54
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 87
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    pop static 18
+    push constant 23
+    call String.new 1
+    push constant 47
+    call String.appendChar 2
+    push constant 51
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 80
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 61
+    call String.appendChar 2
+    push constant 72
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 61
+    call String.appendChar 2
+    push constant 70
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 88
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    pop static 19
+    call Main.splash 0
+    pop temp 0
+    push constant 1
+    neg
+    pop local 0
+label Main_0
+    push local 0
+    not
+    if-goto Main_1
+    call Main.newGame 0
+    pop temp 0
+    call Main.play 0
+    pop temp 0
+    call Main.cleanup 0
+    pop temp 0
+    push static 14
+    not
+    if-goto Main_3
+    push constant 0
+    pop local 0
+    goto Main_2
+label Main_3
+    call Main.endScreen 0
+    pop local 0
+label Main_2
+    goto Main_0
+label Main_1
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 10
+    push constant 22
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 20
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 89
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 85
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 72
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 90
+    call String.appendChar 2
+    push constant 66
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 0
+    return
+function Main.rand 1
+    push static 15
+    push constant 25173
+    call Math.multiply 2
+    push constant 13849
+    add
+    pop static 15
+    push static 15
+    push constant 32767
+    and
+    pop local 0
+    push local 0
+    push constant 16
+    call Math.divide 2
+    pop local 0
+    push local 0
+    push local 0
+    push argument 0
+    call Math.divide 2
+    push argument 0
+    call Math.multiply 2
+    sub
+    return
+function Main.splash 4
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 2
+    push constant 21
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 22
+    call String.new 1
+    push constant 61
+    call String.appendChar 2
+    push constant 61
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 76
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 90
+    call String.appendChar 2
+    push constant 66
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 68
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 70
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 78
+    call String.appendChar 2
+    push constant 68
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 61
+    call String.appendChar 2
+    push constant 61
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 5
+    push constant 12
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 40
+    call String.new 1
+    push constant 67
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 119
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 118
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 109
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 107
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 121
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 117
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 109
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 6
+    push constant 12
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 34
+    call String.new 1
+    push constant 84
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 121
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 98
+    call String.appendChar 2
+    push constant 117
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 112
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 44
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 7
+    push constant 12
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 33
+    call String.new 1
+    push constant 112
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 119
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 46
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 68
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 122
+    call String.appendChar 2
+    push constant 98
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 9
+    push constant 14
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 13
+    call String.new 1
+    push constant 65
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 87
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 109
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 118
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 10
+    push constant 14
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 31
+    call String.new 1
+    push constant 83
+    call String.appendChar 2
+    push constant 80
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 119
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 112
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 104
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 107
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 11
+    push constant 14
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 42
+    call String.new 1
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 102
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 120
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 112
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 47
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 117
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 119
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 40
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 97
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 100
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 99
+    call String.appendChar 2
+    push constant 108
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 41
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 12
+    push constant 14
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 13
+    call String.new 1
+    push constant 69
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 113
+    call String.appendChar 2
+    push constant 117
+    call String.appendChar 2
+    push constant 105
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push constant 150
+    push constant 150
+    call Farmer.new 2
+    pop local 0
+    push local 0
+    call Farmer.draw 1
+    pop temp 0
+    push constant 230
+    push constant 156
+    call Crop.new 2
+    pop local 1
+    push local 1
+    call Crop.draw 1
+    pop temp 0
+    call Crow.new 0
+    pop local 2
+    push local 2
+    push constant 300
+    push constant 150
+    push constant 0
+    call Crow.spawn 4
+    pop temp 0
+    push local 2
+    call Crow.draw 1
+    pop temp 0
+    call EvilFarmer.new 0
+    pop local 3
+    push local 3
+    push constant 360
+    push constant 150
+    push constant 2
+    push constant 0
+    push constant 1
+    call EvilFarmer.spawn 6
+    pop temp 0
+    push local 3
+    call EvilFarmer.draw 1
+    pop temp 0
+    push local 0
+    call Farmer.dispose 1
+    pop temp 0
+    push local 1
+    call Crop.dispose 1
+    pop temp 0
+    push local 2
+    call Crow.dispose 1
+    pop temp 0
+    push local 3
+    call EvilFarmer.dispose 1
+    pop temp 0
+    push constant 19
+    push constant 21
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 22
+    call String.new 1
+    push constant 80
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 78
+    call String.appendChar 2
+    push constant 89
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 75
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 89
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+label Main_4
+    call Keyboard.keyPressed 0
+    push constant 0
+    eq
+    not
+    if-goto Main_5
+    push static 15
+    push constant 7
+    add
+    pop static 15
+    goto Main_4
+label Main_5
+label Main_6
+    call Keyboard.keyPressed 0
+    push constant 0
+    eq
+    not
+    not
+    if-goto Main_7
+    push constant 10
+    call Sys.wait 1
+    pop temp 0
+    goto Main_6
+label Main_7
+    push constant 0
+    return
+function Main.endScreen 3
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 8
+    push constant 21
+    call Output.moveCursor 2
+    pop temp 0
+    push static 13
+    not
+    if-goto Main_9
+    push constant 19
+    call String.new 1
+    push constant 89
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 85
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 86
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 68
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 72
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 90
+    call String.appendChar 2
+    push constant 66
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 33
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    goto Main_8
+label Main_9
+    push constant 19
+    call String.new 1
+    push constant 84
+    call String.appendChar 2
+    push constant 72
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 90
+    call String.appendChar 2
+    push constant 66
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 76
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 46
+    call String.appendChar 2
+    push constant 46
+    call String.appendChar 2
+    push constant 46
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+label Main_8
+    push constant 10
+    push constant 23
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 13
+    call String.new 1
+    push constant 70
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 78
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 76
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 67
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push static 5
+    call Output.printInt 1
+    pop temp 0
+    push constant 13
+    push constant 16
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 34
+    call String.new 1
+    push constant 80
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 69
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 83
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 80
+    call String.appendChar 2
+    push constant 76
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 89
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 71
+    call String.appendChar 2
+    push constant 65
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 78
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 82
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 81
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    push constant 79
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    push constant 81
+    call String.appendChar 2
+    push constant 85
+    call String.appendChar 2
+    push constant 73
+    call String.appendChar 2
+    push constant 84
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+label Main_10
+    call Keyboard.keyPressed 0
+    push constant 0
+    eq
+    not
+    not
+    if-goto Main_11
+    push constant 10
+    call Sys.wait 1
+    pop temp 0
+    goto Main_10
+label Main_11
+    push constant 1
+    neg
+    pop local 1
+    push constant 0
+    pop local 2
+label Main_12
+    push local 1
+    not
+    if-goto Main_13
+    call Keyboard.keyPressed 0
+    pop local 0
+    push local 0
+    push constant 82
+    eq
+    push local 0
+    push constant 114
+    eq
+    or
+    not
+    if-goto Main_15
+    push constant 1
+    neg
+    pop local 2
+    push constant 0
+    pop local 1
+    goto Main_14
+label Main_15
+label Main_14
+    push local 0
+    push constant 81
+    eq
+    push local 0
+    push constant 113
+    eq
+    or
+    not
+    if-goto Main_17
+    push constant 0
+    pop local 2
+    push constant 0
+    pop local 1
+    goto Main_16
+label Main_17
+label Main_16
+    goto Main_12
+label Main_13
+label Main_18
+    call Keyboard.keyPressed 0
+    push constant 0
+    eq
+    not
+    not
+    if-goto Main_19
+    push constant 10
+    call Sys.wait 1
+    pop temp 0
+    goto Main_18
+label Main_19
+    push local 2
+    return
+function Main.newGame 1
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 0
+    pop static 5
+    push constant 0
+    pop static 6
+    push constant 0
+    pop static 7
+    push constant 40
+    pop static 8
+    push constant 150
+    pop static 9
+    push constant 6
+    pop static 10
+    push constant 3
+    pop static 11
+    push constant 0
+    pop static 12
+    push constant 0
+    pop static 13
+    push constant 240
+    push constant 150
+    call Farmer.new 2
+    pop static 0
+    push constant 6
+    call Array.new 1
+    pop static 1
+    push constant 0
+    pop local 0
+label Main_20
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_21
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_23
+    push local 0
+    push static 1
+    add
+    push constant 100
+    push local 0
+    push constant 120
+    call Math.multiply 2
+    add
+    push constant 50
+    call Crop.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto Main_22
+label Main_23
+    push local 0
+    push static 1
+    add
+    push constant 100
+    push local 0
+    push constant 3
+    sub
+    push constant 120
+    call Math.multiply 2
+    add
+    push constant 125
+    call Crop.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+label Main_22
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_20
+label Main_21
+    push constant 3
+    call Array.new 1
+    pop static 2
+    push constant 0
+    pop local 0
+label Main_24
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_25
+    push local 0
+    push static 2
+    add
+    push constant 30
+    push local 0
+    push constant 160
+    call Math.multiply 2
+    add
+    push constant 218
+    push constant 20
+    push local 0
+    push constant 160
+    call Math.multiply 2
+    add
+    push constant 140
+    push local 0
+    push constant 160
+    call Math.multiply 2
+    add
+    call Animal.new 4
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_24
+label Main_25
+    push constant 3
+    call Array.new 1
+    pop static 3
+    push constant 0
+    pop local 0
+label Main_26
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_27
+    push local 0
+    push static 3
+    add
+    call Crow.new 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_26
+label Main_27
+    push constant 2
+    call Array.new 1
+    pop static 4
+    push constant 0
+    pop local 0
+label Main_28
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_29
+    push local 0
+    push static 4
+    add
+    call EvilFarmer.new 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_28
+label Main_29
+    call Main.drawBackground 0
+    pop temp 0
+    push constant 0
+    return
+function Main.cleanup 5
+    push static 0
+    call Farmer.dispose 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Main_30
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_31
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.dispose 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_30
+label Main_31
+    push static 1
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Main_32
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_33
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Animal.dispose 1
+    pop temp 0
+    push local 0
+    push static 3
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Crow.dispose 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_32
+label Main_33
+    push static 2
+    call Array.dispose 1
+    pop temp 0
+    push static 3
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Main_34
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_35
+    push local 0
+    push static 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 4
+    push local 4
+    call EvilFarmer.dispose 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_34
+label Main_35
+    push static 4
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function Main.drawBackground 1
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push constant 0
+    push constant 13
+    push constant 511
+    push constant 13
+    call Screen.drawLine 4
+    pop temp 0
+    push constant 0
+    push constant 246
+    push constant 511
+    push constant 246
+    call Screen.drawLine 4
+    pop temp 0
+    push constant 0
+    push constant 251
+    push constant 511
+    push constant 251
+    call Screen.drawLine 4
+    pop temp 0
+    push constant 0
+    pop local 0
+label Main_36
+    push local 0
+    push constant 510
+    lt
+    not
+    if-goto Main_37
+    push local 0
+    push constant 240
+    push local 0
+    push constant 254
+    call Screen.drawLine 4
+    pop temp 0
+    push local 0
+    push constant 24
+    add
+    pop local 0
+    goto Main_36
+label Main_37
+    push constant 0
+    return
+function Main.play 0
+label Main_38
+    push static 12
+    not
+    not
+    if-goto Main_39
+    call Main.eraseAll 0
+    pop temp 0
+    call Main.handleInput 0
+    pop temp 0
+    call Main.update 0
+    pop temp 0
+    call Main.drawAll 0
+    pop temp 0
+    push static 6
+    push constant 3
+    and
+    push constant 0
+    eq
+    not
+    if-goto Main_41
+    call Main.hud 0
+    pop temp 0
+    goto Main_40
+label Main_41
+label Main_40
+    push constant 30
+    call Sys.wait 1
+    pop temp 0
+    push static 6
+    push constant 1
+    add
+    pop static 6
+    goto Main_38
+label Main_39
+    push constant 0
+    return
+function Main.handleInput 1
+    call Keyboard.keyPressed 0
+    pop local 0
+    push local 0
+    push constant 130
+    eq
+    not
+    if-goto Main_43
+    push static 0
+    push constant 1
+    neg
+    push constant 0
+    call Farmer.move 3
+    pop temp 0
+    goto Main_42
+label Main_43
+label Main_42
+    push local 0
+    push constant 132
+    eq
+    not
+    if-goto Main_45
+    push static 0
+    push constant 1
+    push constant 0
+    call Farmer.move 3
+    pop temp 0
+    goto Main_44
+label Main_45
+label Main_44
+    push local 0
+    push constant 131
+    eq
+    not
+    if-goto Main_47
+    push static 0
+    push constant 0
+    push constant 1
+    neg
+    call Farmer.move 3
+    pop temp 0
+    goto Main_46
+label Main_47
+label Main_46
+    push local 0
+    push constant 133
+    eq
+    not
+    if-goto Main_49
+    push static 0
+    push constant 0
+    push constant 1
+    call Farmer.move 3
+    pop temp 0
+    goto Main_48
+label Main_49
+label Main_48
+    push local 0
+    push constant 32
+    eq
+    not
+    if-goto Main_51
+    push static 0
+    call Farmer.swing 1
+    pop temp 0
+    goto Main_50
+label Main_51
+label Main_50
+    push local 0
+    push constant 69
+    eq
+    push local 0
+    push constant 101
+    eq
+    or
+    not
+    if-goto Main_53
+    call Main.fixNearby 0
+    pop temp 0
+    goto Main_52
+label Main_53
+label Main_52
+    push local 0
+    push constant 140
+    eq
+    not
+    if-goto Main_55
+    push constant 1
+    neg
+    pop static 14
+    push constant 1
+    neg
+    pop static 12
+    goto Main_54
+label Main_55
+label Main_54
+    push constant 0
+    return
+function Main.fixNearby 4
+    push constant 0
+    pop local 3
+    push constant 0
+    pop local 0
+label Main_56
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_57
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.isSick 1
+    not
+    if-goto Main_59
+    push static 0
+    push local 1
+    call Crop.getX 1
+    push constant 8
+    add
+    push local 1
+    call Crop.getY 1
+    push constant 8
+    add
+    call Farmer.near 3
+    not
+    if-goto Main_61
+    push local 1
+    call Crop.fix 1
+    pop temp 0
+    push static 5
+    push constant 1
+    add
+    pop static 5
+    push constant 1
+    neg
+    pop local 3
+    goto Main_60
+label Main_61
+label Main_60
+    goto Main_58
+label Main_59
+label Main_58
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_56
+label Main_57
+    push constant 0
+    pop local 0
+label Main_62
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_63
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Animal.isPoisoned 1
+    not
+    if-goto Main_65
+    push static 0
+    push local 2
+    call Animal.getX 1
+    push constant 10
+    add
+    push local 2
+    call Animal.getY 1
+    push constant 6
+    add
+    call Farmer.near 3
+    not
+    if-goto Main_67
+    push local 2
+    call Animal.cure 1
+    pop temp 0
+    push static 5
+    push constant 1
+    add
+    pop static 5
+    push constant 1
+    neg
+    pop local 3
+    goto Main_66
+label Main_67
+label Main_66
+    goto Main_64
+label Main_65
+label Main_64
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_62
+label Main_63
+    push local 3
+    not
+    if-goto Main_69
+    push static 0
+    call Farmer.startFix 1
+    pop temp 0
+    goto Main_68
+label Main_69
+label Main_68
+    push constant 0
+    return
+function Main.update 3
+    push static 0
+    call Farmer.tick 1
+    pop temp 0
+    push static 5
+    push constant 8
+    call Math.divide 2
+    pop static 7
+    push static 7
+    push constant 2
+    gt
+    not
+    if-goto Main_71
+    push constant 2
+    pop static 7
+    goto Main_70
+label Main_71
+label Main_70
+    call Main.updateCrows 0
+    pop temp 0
+    call Main.updateEvils 0
+    pop temp 0
+    push static 6
+    push constant 15
+    and
+    push constant 0
+    eq
+    not
+    if-goto Main_73
+    push constant 0
+    pop local 0
+label Main_74
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_75
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.tick 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_74
+label Main_75
+    push constant 0
+    pop local 0
+label Main_76
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_77
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Animal.tick 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_76
+label Main_77
+    goto Main_72
+label Main_73
+label Main_72
+    push static 6
+    push constant 127
+    and
+    push constant 0
+    eq
+    not
+    if-goto Main_79
+    push constant 0
+    pop local 0
+label Main_80
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_81
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.grow 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_80
+label Main_81
+    goto Main_78
+label Main_79
+label Main_78
+    push constant 0
+    pop local 0
+label Main_82
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_83
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    push constant 80
+    call Main.rand 1
+    call Animal.move 2
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_82
+label Main_83
+    push constant 0
+    pop static 10
+    push constant 0
+    pop local 0
+label Main_84
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_85
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.isDestroyed 1
+    not
+    not
+    if-goto Main_87
+    push static 10
+    push constant 1
+    add
+    pop static 10
+    goto Main_86
+label Main_87
+label Main_86
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_84
+label Main_85
+    push constant 0
+    pop static 11
+    push constant 0
+    pop local 0
+label Main_88
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_89
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Animal.isAlive 1
+    not
+    if-goto Main_91
+    push static 11
+    push constant 1
+    add
+    pop static 11
+    goto Main_90
+label Main_91
+label Main_90
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_88
+label Main_89
+    push static 5
+    push constant 39
+    gt
+    not
+    if-goto Main_93
+    push constant 1
+    neg
+    pop static 13
+    push constant 1
+    neg
+    pop static 12
+    goto Main_92
+label Main_93
+label Main_92
+    push static 10
+    push constant 0
+    eq
+    push static 11
+    push constant 0
+    eq
+    or
+    not
+    if-goto Main_95
+    push constant 1
+    neg
+    pop static 12
+    goto Main_94
+label Main_95
+label Main_94
+    push constant 0
+    return
+function Main.updateCrows 4
+    push constant 0
+    pop local 0
+label Main_96
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_97
+    push local 0
+    push static 3
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Crow.isAlive 1
+    not
+    if-goto Main_99
+    push static 0
+    call Farmer.isSwinging 1
+    not
+    if-goto Main_101
+    push static 0
+    push local 2
+    call Crow.getX 1
+    push constant 6
+    add
+    push local 2
+    call Crow.getY 1
+    push constant 4
+    add
+    call Farmer.reaches 3
+    not
+    if-goto Main_103
+    push local 2
+    call Crow.kill 1
+    pop temp 0
+    push static 5
+    push constant 1
+    add
+    pop static 5
+    goto Main_102
+label Main_103
+label Main_102
+    goto Main_100
+label Main_101
+label Main_100
+    goto Main_98
+label Main_99
+label Main_98
+    push local 2
+    call Crow.isAlive 1
+    not
+    if-goto Main_105
+    push local 2
+    call Crow.getTarget 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Crop.isDestroyed 1
+    not
+    if-goto Main_107
+    push local 2
+    call Main.pickCrop 0
+    call Crow.setTarget 2
+    pop temp 0
+    push local 2
+    call Crow.getTarget 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    goto Main_106
+label Main_107
+label Main_106
+    push local 2
+    push local 3
+    call Crop.getX 1
+    push constant 2
+    add
+    push local 3
+    call Crop.getY 1
+    push constant 8
+    sub
+    push constant 3
+    call Main.rand 1
+    push constant 1
+    sub
+    call Crow.moveToward 4
+    pop temp 0
+    push local 2
+    push local 3
+    call Crop.getX 1
+    push constant 2
+    add
+    push local 3
+    call Crop.getY 1
+    push constant 8
+    sub
+    call Crow.atTarget 3
+    not
+    if-goto Main_109
+    push static 6
+    push constant 15
+    and
+    push constant 8
+    eq
+    not
+    if-goto Main_111
+    push local 3
+    push constant 1
+    call Crop.damage 2
+    pop temp 0
+    goto Main_110
+label Main_111
+label Main_110
+    goto Main_108
+label Main_109
+label Main_108
+    goto Main_104
+label Main_105
+label Main_104
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_96
+label Main_97
+    push static 8
+    push constant 0
+    gt
+    not
+    if-goto Main_113
+    push static 8
+    push constant 1
+    sub
+    pop static 8
+    goto Main_112
+label Main_113
+label Main_112
+    push constant 1
+    push static 7
+    add
+    pop local 1
+    push constant 0
+    pop local 0
+label Main_114
+    push local 0
+    push local 1
+    lt
+    not
+    if-goto Main_115
+    push local 0
+    push static 3
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push static 8
+    push constant 0
+    eq
+    push local 2
+    call Crow.isAlive 1
+    not
+    and
+    not
+    if-goto Main_117
+    push local 2
+    push constant 480
+    call Main.rand 1
+    push constant 16
+    call Main.pickCrop 0
+    call Crow.spawn 4
+    pop temp 0
+    push constant 90
+    push static 7
+    push constant 20
+    call Math.multiply 2
+    sub
+    push constant 40
+    call Main.rand 1
+    add
+    pop static 8
+    goto Main_116
+label Main_117
+label Main_116
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_114
+label Main_115
+    push constant 0
+    return
+function Main.updateEvils 12
+    push constant 0
+    pop local 0
+label Main_118
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_119
+    push local 0
+    push static 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 8
+    push local 8
+    call EvilFarmer.isAlive 1
+    not
+    if-goto Main_121
+    push static 0
+    call Farmer.isSwinging 1
+    not
+    if-goto Main_123
+    push static 0
+    push local 8
+    call EvilFarmer.getX 1
+    push constant 7
+    add
+    push local 8
+    call EvilFarmer.getY 1
+    push constant 11
+    add
+    call Farmer.reaches 3
+    not
+    if-goto Main_125
+    push local 8
+    call EvilFarmer.kill 1
+    pop temp 0
+    push static 5
+    push constant 2
+    add
+    pop static 5
+    goto Main_124
+label Main_125
+label Main_124
+    goto Main_122
+label Main_123
+label Main_122
+    goto Main_120
+label Main_121
+label Main_120
+    push local 8
+    call EvilFarmer.isAlive 1
+    not
+    if-goto Main_127
+    push local 8
+    call EvilFarmer.getState 1
+    push constant 0
+    eq
+    not
+    if-goto Main_129
+    push constant 1
+    neg
+    pop local 11
+    push constant 0
+    pop local 6
+    push constant 0
+    pop local 7
+    push local 8
+    call EvilFarmer.getKind 1
+    push constant 3
+    eq
+    not
+    if-goto Main_131
+    push local 8
+    call EvilFarmer.getTarget 1
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 10
+    push local 10
+    call Animal.isHealthy 1
+    not
+    not
+    if-goto Main_133
+    call Main.pickAnimal 0
+    pop local 1
+    push local 1
+    push constant 0
+    lt
+    not
+    if-goto Main_135
+    push constant 0
+    pop local 11
+    goto Main_134
+label Main_135
+    push local 8
+    push local 1
+    call EvilFarmer.setTarget 2
+    pop temp 0
+    push local 1
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 10
+label Main_134
+    goto Main_132
+label Main_133
+label Main_132
+    push local 11
+    not
+    if-goto Main_137
+    push local 10
+    call Animal.getX 1
+    push constant 16
+    sub
+    pop local 6
+    push local 10
+    call Animal.getY 1
+    push constant 10
+    sub
+    pop local 7
+    goto Main_136
+label Main_137
+label Main_136
+    goto Main_130
+label Main_131
+    push local 8
+    call EvilFarmer.getTarget 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 9
+    push local 9
+    call Crop.isDestroyed 1
+    not
+    if-goto Main_139
+    call Main.pickCrop 0
+    pop local 1
+    push local 8
+    push local 1
+    call EvilFarmer.setTarget 2
+    pop temp 0
+    push local 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 9
+    goto Main_138
+label Main_139
+label Main_138
+    push local 9
+    call Crop.getX 1
+    push constant 16
+    sub
+    pop local 6
+    push local 9
+    call Crop.getY 1
+    push constant 4
+    sub
+    pop local 7
+label Main_130
+    push local 11
+    not
+    if-goto Main_141
+    push local 8
+    push local 6
+    push local 7
+    call EvilFarmer.atTarget 3
+    not
+    if-goto Main_143
+    push local 8
+    call EvilFarmer.startWork 1
+    pop temp 0
+    goto Main_142
+label Main_143
+    push local 8
+    push local 6
+    push local 7
+    call EvilFarmer.moveToward 3
+    pop temp 0
+label Main_142
+    goto Main_140
+label Main_141
+    push local 8
+    call EvilFarmer.flee 1
+    pop temp 0
+label Main_140
+    goto Main_128
+label Main_129
+    push local 8
+    call EvilFarmer.getState 1
+    push constant 1
+    eq
+    not
+    if-goto Main_145
+    push local 8
+    call EvilFarmer.tickWork 1
+    not
+    if-goto Main_147
+    push local 8
+    call EvilFarmer.getKind 1
+    push constant 1
+    eq
+    not
+    if-goto Main_149
+    push local 8
+    call EvilFarmer.getTarget 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 9
+    push local 9
+    call Crop.flood 1
+    pop temp 0
+    goto Main_148
+label Main_149
+label Main_148
+    push local 8
+    call EvilFarmer.getKind 1
+    push constant 2
+    eq
+    not
+    if-goto Main_151
+    push local 8
+    call EvilFarmer.getTarget 1
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 9
+    push local 9
+    call Crop.ignite 1
+    pop temp 0
+    goto Main_150
+label Main_151
+label Main_150
+    push local 8
+    call EvilFarmer.getKind 1
+    push constant 3
+    eq
+    not
+    if-goto Main_153
+    push local 8
+    call EvilFarmer.getTarget 1
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 10
+    push local 10
+    call Animal.poison 1
+    pop temp 0
+    goto Main_152
+label Main_153
+label Main_152
+    push local 8
+    call EvilFarmer.flee 1
+    pop temp 0
+    goto Main_146
+label Main_147
+label Main_146
+    goto Main_144
+label Main_145
+    push local 8
+    call EvilFarmer.moveFlee 1
+    pop temp 0
+label Main_144
+label Main_128
+    goto Main_126
+label Main_127
+label Main_126
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_118
+label Main_119
+    push static 9
+    push constant 0
+    gt
+    not
+    if-goto Main_155
+    push static 9
+    push constant 1
+    sub
+    pop static 9
+    goto Main_154
+label Main_155
+label Main_154
+    push static 5
+    push constant 4
+    gt
+    not
+    if-goto Main_157
+    push constant 2
+    pop local 5
+    goto Main_156
+label Main_157
+    push constant 1
+    pop local 5
+label Main_156
+    push constant 0
+    pop local 0
+label Main_158
+    push local 0
+    push local 5
+    lt
+    not
+    if-goto Main_159
+    push local 0
+    push static 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 8
+    push static 9
+    push constant 0
+    eq
+    push local 8
+    call EvilFarmer.isAlive 1
+    not
+    and
+    not
+    if-goto Main_161
+    push constant 1
+    push constant 3
+    call Main.rand 1
+    add
+    pop local 2
+    push constant 0
+    pop local 1
+    push local 2
+    push constant 3
+    eq
+    not
+    if-goto Main_163
+    call Main.pickAnimal 0
+    pop local 1
+    push local 1
+    push constant 0
+    lt
+    not
+    if-goto Main_165
+    push constant 1
+    pop local 2
+    goto Main_164
+label Main_165
+label Main_164
+    goto Main_162
+label Main_163
+label Main_162
+    push local 2
+    push constant 3
+    lt
+    not
+    if-goto Main_167
+    call Main.pickCrop 0
+    pop local 1
+    goto Main_166
+label Main_167
+label Main_166
+    push constant 2
+    call Main.rand 1
+    push constant 0
+    eq
+    not
+    if-goto Main_169
+    push constant 2
+    pop local 4
+    push constant 1
+    neg
+    pop local 3
+    goto Main_168
+label Main_169
+    push constant 488
+    pop local 4
+    push constant 1
+    pop local 3
+label Main_168
+    push local 8
+    push local 4
+    push constant 30
+    push constant 150
+    call Main.rand 1
+    add
+    push local 2
+    push local 1
+    push local 3
+    call EvilFarmer.spawn 6
+    pop temp 0
+    push constant 220
+    push static 7
+    push constant 30
+    call Math.multiply 2
+    sub
+    push constant 60
+    call Main.rand 1
+    add
+    pop static 9
+    goto Main_160
+label Main_161
+label Main_160
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_158
+label Main_159
+    push constant 0
+    return
+function Main.pickCrop 4
+    push constant 0
+    pop local 1
+    push constant 0
+    pop local 0
+label Main_170
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_171
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Crop.isDestroyed 1
+    not
+    not
+    if-goto Main_173
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_172
+label Main_173
+label Main_172
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_170
+label Main_171
+    push local 1
+    push constant 0
+    eq
+    not
+    if-goto Main_175
+    push constant 0
+    return
+    goto Main_174
+label Main_175
+label Main_174
+    push local 1
+    call Main.rand 1
+    pop local 2
+    push constant 0
+    pop local 0
+label Main_176
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_177
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Crop.isDestroyed 1
+    not
+    not
+    if-goto Main_179
+    push local 2
+    push constant 0
+    eq
+    not
+    if-goto Main_181
+    push local 0
+    return
+    goto Main_180
+label Main_181
+label Main_180
+    push local 2
+    push constant 1
+    sub
+    pop local 2
+    goto Main_178
+label Main_179
+label Main_178
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_176
+label Main_177
+    push constant 0
+    return
+function Main.pickAnimal 4
+    push constant 0
+    pop local 1
+    push constant 0
+    pop local 0
+label Main_182
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_183
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Animal.isHealthy 1
+    not
+    if-goto Main_185
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_184
+label Main_185
+label Main_184
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_182
+label Main_183
+    push local 1
+    push constant 0
+    eq
+    not
+    if-goto Main_187
+    push constant 1
+    neg
+    return
+    goto Main_186
+label Main_187
+label Main_186
+    push local 1
+    call Main.rand 1
+    pop local 2
+    push constant 0
+    pop local 0
+label Main_188
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_189
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Animal.isHealthy 1
+    not
+    if-goto Main_191
+    push local 2
+    push constant 0
+    eq
+    not
+    if-goto Main_193
+    push local 0
+    return
+    goto Main_192
+label Main_193
+label Main_192
+    push local 2
+    push constant 1
+    sub
+    pop local 2
+    goto Main_190
+label Main_191
+label Main_190
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_188
+label Main_189
+    push constant 1
+    neg
+    return
+function Main.eraseAll 4
+    push static 0
+    call Farmer.erase 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Main_194
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_195
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Animal.erase 1
+    pop temp 0
+    push local 0
+    push static 3
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Crow.isAlive 1
+    not
+    if-goto Main_197
+    push local 2
+    call Crow.erase 1
+    pop temp 0
+    goto Main_196
+label Main_197
+label Main_196
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_194
+label Main_195
+    push constant 0
+    pop local 0
+label Main_198
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_199
+    push local 0
+    push static 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call EvilFarmer.isAlive 1
+    not
+    if-goto Main_201
+    push local 3
+    call EvilFarmer.erase 1
+    pop temp 0
+    goto Main_200
+label Main_201
+label Main_200
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_198
+label Main_199
+    push constant 0
+    return
+function Main.drawAll 5
+    push constant 0
+    pop local 0
+label Main_202
+    push local 0
+    push constant 6
+    lt
+    not
+    if-goto Main_203
+    push local 0
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    pop local 1
+    push local 1
+    call Crop.draw 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_202
+label Main_203
+    push constant 0
+    pop local 0
+label Main_204
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_205
+    push local 0
+    push static 2
+    add
+    pop pointer 1
+    push that 0
+    pop local 2
+    push local 2
+    call Animal.draw 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_204
+label Main_205
+    push constant 0
+    pop local 0
+label Main_206
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_207
+    push local 0
+    push static 4
+    add
+    pop pointer 1
+    push that 0
+    pop local 4
+    push local 4
+    call EvilFarmer.isAlive 1
+    not
+    if-goto Main_209
+    push local 4
+    call EvilFarmer.draw 1
+    pop temp 0
+    goto Main_208
+label Main_209
+label Main_208
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_206
+label Main_207
+    push constant 0
+    pop local 0
+label Main_210
+    push local 0
+    push constant 3
+    lt
+    not
+    if-goto Main_211
+    push local 0
+    push static 3
+    add
+    pop pointer 1
+    push that 0
+    pop local 3
+    push local 3
+    call Crow.isAlive 1
+    not
+    if-goto Main_213
+    push local 3
+    call Crow.draw 1
+    pop temp 0
+    goto Main_212
+label Main_213
+label Main_212
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_210
+label Main_211
+    push static 0
+    call Farmer.draw 1
+    pop temp 0
+    push constant 0
+    return
+function Main.hud 0
+    push constant 0
+    push constant 0
+    call Output.moveCursor 2
+    pop temp 0
+    push static 16
+    call Output.printString 1
+    pop temp 0
+    push static 5
+    call Output.printInt 1
+    pop temp 0
+    push static 17
+    call Output.printString 1
+    pop temp 0
+    push static 10
+    call Output.printInt 1
+    pop temp 0
+    push static 18
+    call Output.printString 1
+    pop temp 0
+    push static 11
+    call Output.printInt 1
+    pop temp 0
+    push static 19
+    call Output.printString 1
+    pop temp 0
+    push constant 0
+    return

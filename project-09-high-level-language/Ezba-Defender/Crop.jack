@@ -1,0 +1,127 @@
+/**
+ * Crop: one plant in the field.
+ * state: 0 = healthy, 1 = flooded, 2 = burning, 3 = destroyed.
+ * hp (0..8) is the plant's health and also controls how tall it is drawn.
+ */
+class Crop {
+    field int x, y;
+    field int hp;
+    field int state;
+
+    constructor Crop new(int ax, int ay) {
+        let x = ax;
+        let y = ay;
+        let hp = 8;
+        let state = 0;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method int getState() { return state; }
+    method boolean isDestroyed() { return state = 3; }
+    method boolean isSick() { return (state = 1) | (state = 2); }
+
+    /** Damage from a crow pecking at the plant. */
+    method void damage(int n) {
+        if (~(state = 3)) {
+            let hp = hp - n;
+            if (hp < 1) {
+                let hp = 0;
+                let state = 3;
+            }
+        }
+        return;
+    }
+
+    /** An evil farmer floods the crop. */
+    method void flood() {
+        if (state = 0) { let state = 1; }
+        return;
+    }
+
+    /** An evil farmer sets the crop on fire (fire overrides flood). */
+    method void ignite() {
+        if ((state = 0) | (state = 1)) { let state = 2; }
+        return;
+    }
+
+    /** The farmer drains the water / puts out the fire. */
+    method void fix() {
+        if ((state = 1) | (state = 2)) { let state = 0; }
+        return;
+    }
+
+    /** Called every 16 frames: flood hurts a little, fire hurts a lot. */
+    method void tick() {
+        if (state = 1) { do damage(1); }
+        if (state = 2) { do damage(2); }
+        return;
+    }
+
+    /** Called every 128 frames: healthy crops slowly regrow. */
+    method void grow() {
+        if ((state = 0) & (hp < 8)) {
+            let hp = hp + 1;
+        }
+        return;
+    }
+
+    method void draw() {
+        var int h, top, mid;
+
+        // clear the cell first
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y - 2, x + 16, y + 17);
+        do Screen.setColor(true);
+
+        // soil
+        do Screen.drawLine(x, y + 16, x + 16, y + 16);
+
+        if (state = 3) {
+            // withered crop: a cross on the soil
+            do Screen.drawLine(x + 4, y + 9, x + 12, y + 16);
+            do Screen.drawLine(x + 12, y + 9, x + 4, y + 16);
+        } else {
+            let h = hp * 2;
+            let top = y + 16 - h;
+            if (h > 0) {
+                // stem and ear on top
+                do Screen.drawLine(x + 8, top, x + 8, y + 16);
+                do Screen.drawCircle(x + 8, top, 2);
+            }
+            if (hp > 2) {
+                // leaves
+                let mid = y + 16 - (h / 2);
+                do Screen.drawRectangle(x + 2, mid - 2, x + 7, mid);
+                do Screen.drawRectangle(x + 9, mid - 2, x + 14, mid);
+            }
+            if (state = 1) {
+                // water waves
+                do Screen.drawLine(x, y + 13, x + 4, y + 11);
+                do Screen.drawLine(x + 4, y + 11, x + 8, y + 13);
+                do Screen.drawLine(x + 8, y + 13, x + 12, y + 11);
+                do Screen.drawLine(x + 12, y + 11, x + 16, y + 13);
+                do Screen.drawLine(x, y + 15, x + 4, y + 13);
+                do Screen.drawLine(x + 4, y + 13, x + 8, y + 15);
+                do Screen.drawLine(x + 8, y + 15, x + 12, y + 13);
+                do Screen.drawLine(x + 12, y + 13, x + 16, y + 15);
+            }
+            if (state = 2) {
+                // flames
+                do Screen.drawLine(x + 2, y + 16, x + 5, y + 4);
+                do Screen.drawLine(x + 5, y + 4, x + 8, y + 16);
+                do Screen.drawLine(x + 8, y + 16, x + 11, y + 6);
+                do Screen.drawLine(x + 11, y + 6, x + 14, y + 16);
+                do Screen.drawLine(x + 5, y + 4, x + 5, y + 12);
+                do Screen.drawLine(x + 11, y + 6, x + 11, y + 12);
+            }
+        }
+        return;
+    }
+}

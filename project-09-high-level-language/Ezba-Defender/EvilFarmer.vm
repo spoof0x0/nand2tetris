@@ -1,0 +1,593 @@
+function EvilFarmer.new 0
+    push constant 9
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 0
+    pop this 0
+    push constant 30
+    pop this 1
+    push constant 1
+    pop this 2
+    push constant 0
+    pop this 3
+    push constant 0
+    pop this 4
+    push constant 0
+    pop this 5
+    push constant 1
+    pop this 6
+    push constant 0
+    pop this 7
+    push constant 0
+    pop this 8
+    push pointer 0
+    return
+function EvilFarmer.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function EvilFarmer.spawn 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 0
+    push argument 2
+    pop this 1
+    push argument 3
+    pop this 2
+    push argument 4
+    pop this 5
+    push argument 5
+    pop this 6
+    push constant 0
+    pop this 3
+    push constant 0
+    pop this 4
+    push constant 1
+    neg
+    pop this 8
+    push constant 0
+    return
+function EvilFarmer.isAlive 0
+    push argument 0
+    pop pointer 0
+    push this 8
+    return
+function EvilFarmer.kill 0
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop this 8
+    push constant 0
+    return
+function EvilFarmer.getX 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function EvilFarmer.getY 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function EvilFarmer.getKind 0
+    push argument 0
+    pop pointer 0
+    push this 2
+    return
+function EvilFarmer.getState 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    return
+function EvilFarmer.getTarget 0
+    push argument 0
+    pop pointer 0
+    push this 5
+    return
+function EvilFarmer.setTarget 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 5
+    push constant 0
+    return
+function EvilFarmer.atTarget 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    push argument 1
+    sub
+    call Math.abs 1
+    push constant 4
+    lt
+    push this 1
+    push argument 2
+    sub
+    call Math.abs 1
+    push constant 4
+    lt
+    and
+    return
+function EvilFarmer.moveToward 0
+    push argument 0
+    pop pointer 0
+    push this 7
+    push constant 1
+    add
+    pop this 7
+    push this 0
+    push argument 1
+    push constant 1
+    sub
+    lt
+    not
+    if-goto EvilFarmer_1
+    push this 0
+    push constant 2
+    add
+    pop this 0
+    goto EvilFarmer_0
+label EvilFarmer_1
+label EvilFarmer_0
+    push this 0
+    push argument 1
+    push constant 1
+    add
+    gt
+    not
+    if-goto EvilFarmer_3
+    push this 0
+    push constant 2
+    sub
+    pop this 0
+    goto EvilFarmer_2
+label EvilFarmer_3
+label EvilFarmer_2
+    push this 1
+    push argument 2
+    push constant 1
+    sub
+    lt
+    not
+    if-goto EvilFarmer_5
+    push this 1
+    push constant 2
+    add
+    pop this 1
+    goto EvilFarmer_4
+label EvilFarmer_5
+label EvilFarmer_4
+    push this 1
+    push argument 2
+    push constant 1
+    add
+    gt
+    not
+    if-goto EvilFarmer_7
+    push this 1
+    push constant 2
+    sub
+    pop this 1
+    goto EvilFarmer_6
+label EvilFarmer_7
+label EvilFarmer_6
+    push this 1
+    push constant 22
+    lt
+    not
+    if-goto EvilFarmer_9
+    push constant 22
+    pop this 1
+    goto EvilFarmer_8
+label EvilFarmer_9
+label EvilFarmer_8
+    push this 1
+    push constant 214
+    gt
+    not
+    if-goto EvilFarmer_11
+    push constant 214
+    pop this 1
+    goto EvilFarmer_10
+label EvilFarmer_11
+label EvilFarmer_10
+    push constant 0
+    return
+function EvilFarmer.startWork 0
+    push argument 0
+    pop pointer 0
+    push constant 1
+    pop this 3
+    push constant 14
+    pop this 4
+    push constant 0
+    return
+function EvilFarmer.tickWork 0
+    push argument 0
+    pop pointer 0
+    push this 4
+    push constant 1
+    sub
+    pop this 4
+    push this 4
+    push constant 1
+    lt
+    return
+function EvilFarmer.flee 0
+    push argument 0
+    pop pointer 0
+    push constant 2
+    pop this 3
+    push constant 0
+    return
+function EvilFarmer.moveFlee 0
+    push argument 0
+    pop pointer 0
+    push this 7
+    push constant 1
+    add
+    pop this 7
+    push this 0
+    push this 6
+    push constant 3
+    call Math.multiply 2
+    add
+    pop this 0
+    push this 0
+    push constant 3
+    lt
+    not
+    if-goto EvilFarmer_13
+    push constant 0
+    pop this 8
+    goto EvilFarmer_12
+label EvilFarmer_13
+label EvilFarmer_12
+    push this 0
+    push constant 485
+    gt
+    not
+    if-goto EvilFarmer_15
+    push constant 0
+    pop this 8
+    goto EvilFarmer_14
+label EvilFarmer_15
+label EvilFarmer_14
+    push constant 0
+    return
+function EvilFarmer.erase 0
+    push argument 0
+    pop pointer 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push this 1
+    push constant 6
+    sub
+    push this 0
+    push constant 17
+    add
+    push this 1
+    push constant 22
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function EvilFarmer.draw 1
+    push argument 0
+    pop pointer 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 1
+    add
+    push this 1
+    push this 0
+    push constant 11
+    add
+    push this 1
+    push constant 2
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 6
+    add
+    push this 1
+    push constant 6
+    add
+    push constant 3
+    call Screen.drawCircle 3
+    pop temp 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 0
+    push constant 7
+    add
+    push this 1
+    push constant 5
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 10
+    add
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 10
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 10
+    add
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 17
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 17
+    add
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 17
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 17
+    add
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 10
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 10
+    add
+    push this 1
+    push constant 11
+    add
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 7
+    push constant 1
+    and
+    pop local 0
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 17
+    add
+    push this 0
+    push constant 4
+    add
+    push local 0
+    add
+    push this 1
+    push constant 21
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 17
+    add
+    push this 0
+    push constant 8
+    add
+    push local 0
+    sub
+    push this 1
+    push constant 21
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 2
+    push constant 1
+    eq
+    not
+    if-goto EvilFarmer_17
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 12
+    add
+    push this 0
+    push constant 17
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto EvilFarmer_19
+    push this 0
+    push constant 15
+    add
+    push this 1
+    push constant 17
+    add
+    push this 0
+    push constant 15
+    add
+    push this 1
+    push constant 21
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto EvilFarmer_18
+label EvilFarmer_19
+label EvilFarmer_18
+    goto EvilFarmer_16
+label EvilFarmer_17
+label EvilFarmer_16
+    push this 2
+    push constant 2
+    eq
+    not
+    if-goto EvilFarmer_21
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 14
+    add
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 8
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto EvilFarmer_23
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 6
+    add
+    push constant 3
+    call Screen.drawCircle 3
+    pop temp 0
+    goto EvilFarmer_22
+label EvilFarmer_23
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 6
+    add
+    push constant 2
+    call Screen.drawCircle 3
+    pop temp 0
+label EvilFarmer_22
+    goto EvilFarmer_20
+label EvilFarmer_21
+label EvilFarmer_20
+    push this 2
+    push constant 3
+    eq
+    not
+    if-goto EvilFarmer_25
+    push this 0
+    push constant 13
+    add
+    push this 1
+    push constant 11
+    add
+    push this 0
+    push constant 15
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 8
+    add
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 10
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto EvilFarmer_27
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 8
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 7
+    add
+    call Screen.drawPixel 2
+    pop temp 0
+    goto EvilFarmer_26
+label EvilFarmer_27
+label EvilFarmer_26
+    goto EvilFarmer_24
+label EvilFarmer_25
+label EvilFarmer_24
+    push constant 0
+    return

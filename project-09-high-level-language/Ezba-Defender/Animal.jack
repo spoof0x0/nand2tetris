@@ -1,0 +1,125 @@
+/**
+ * Animal: a cow (bahima) wandering inside its own strip of the farm.
+ * state: 0 = healthy, 1 = poisoned (slowly dying), 2 = dead.
+ */
+class Animal {
+    field int x, y;
+    field int dir;           // 1 = walking right, -1 = walking left
+    field int state;
+    field int hp;            // life left while poisoned
+    field int minX, maxX;    // walking limits
+    field int step;          // animation / speed counter
+
+    constructor Animal new(int ax, int ay, int a, int b) {
+        let x = ax;
+        let y = ay;
+        let minX = a;
+        let maxX = b;
+        let dir = 1;
+        let state = 0;
+        let hp = 12;
+        let step = 0;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getX() { return x; }
+    method int getY() { return y; }
+    method boolean isAlive() { return state < 2; }
+    method boolean isHealthy() { return state = 0; }
+    method boolean isPoisoned() { return state = 1; }
+
+    /** An evil farmer poisons the animal. */
+    method void poison() {
+        if (state = 0) {
+            let state = 1;
+            let hp = 12;
+        }
+        return;
+    }
+
+    /** The farmer cures the animal. */
+    method void cure() {
+        if (state = 1) {
+            let state = 0;
+            let hp = 12;
+        }
+        return;
+    }
+
+    /** Called every 16 frames: poison slowly kills the animal. */
+    method void tick() {
+        if (state = 1) {
+            let hp = hp - 1;
+            if (hp < 1) { let state = 2; }
+        }
+        return;
+    }
+
+    /** Wanders back and forth. r is a random number (0 means "turn around"). */
+    method void move(int r) {
+        if (state = 0) {
+            let step = step + 1;
+            if ((step & 1) = 0) {
+                let x = x + dir;
+            }
+            if (x > maxX) { let dir = -1; }
+            if (x < minX) { let dir = 1; }
+            if (r = 0) { let dir = -dir; }
+        }
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x - 1, y - 10, x + 21, y + 13);
+        return;
+    }
+
+    method void draw() {
+        var int o;
+        do Screen.setColor(true);
+
+        if (state = 2) {
+            // dead cow lying on its back, legs up
+            do Screen.drawRectangle(x + 2, y + 7, x + 18, y + 11);
+            do Screen.drawLine(x + 5, y + 7, x + 5, y + 2);
+            do Screen.drawLine(x + 9, y + 7, x + 9, y + 3);
+            do Screen.drawLine(x + 13, y + 7, x + 13, y + 3);
+            do Screen.drawLine(x + 16, y + 7, x + 16, y + 2);
+        } else {
+            // body
+            do Screen.drawRectangle(x + 4, y + 2, x + 16, y + 8);
+            // head, tail and horns
+            if (dir > 0) {
+                do Screen.drawRectangle(x + 16, y + 1, x + 20, y + 5);
+                do Screen.drawLine(x + 17, y + 1, x + 17, y - 1);
+                do Screen.drawLine(x + 4, y + 2, x + 2, y + 6);
+            } else {
+                do Screen.drawRectangle(x, y + 1, x + 4, y + 5);
+                do Screen.drawLine(x + 3, y + 1, x + 3, y - 1);
+                do Screen.drawLine(x + 16, y + 2, x + 18, y + 6);
+            }
+            // legs (animated)
+            let o = (step / 4) & 1;
+            do Screen.drawLine(x + 6 + o, y + 8, x + 6 + o, y + 11);
+            do Screen.drawLine(x + 14 - o, y + 8, x + 14 - o, y + 11);
+            // white spots
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x + 7, y + 4, x + 8, y + 5);
+            do Screen.drawRectangle(x + 12, y + 3, x + 13, y + 4);
+            do Screen.setColor(true);
+
+            if (state = 1) {
+                // "!" above a poisoned animal
+                do Screen.drawLine(x + 10, y - 8, x + 10, y - 3);
+                do Screen.drawPixel(x + 10, y - 1);
+            }
+        }
+        return;
+    }
+}

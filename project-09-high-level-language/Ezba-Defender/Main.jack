@@ -1,0 +1,714 @@
+/**
+ * Main: runs the whole game "El Ezba Defender".
+ *
+ * The farmer must protect 6 crops and 3 cows from crows and from evil farmers
+ * who flood the crops, set them on fire or poison the cows.
+ *
+ *   Arrows : move        SPACE : hit with the pitchfork
+ *   E      : fix a flooded / burning crop or cure a poisoned cow (stand close)
+ *   ESC    : quit
+ *
+ * You win by reaching 40 points. You lose when all crops or all cows are gone.
+ */
+class Main {
+    static Farmer farmer;
+    static Array crops;      // 6 Crop objects
+    static Array animals;    // 3 Animal objects
+    static Array crows;      // 3 Crow slots
+    static Array evils;      // 2 EvilFarmer slots
+
+    static int score, frame, difficulty;
+    static int crowTimer, evilTimer;
+    static int cropsAlive, animalsAlive;
+    static boolean gameOver, won, quit;
+    static int seed;
+
+    // HUD texts, created ONCE. A string literal in Jack allocates a new String
+    // object every time it is executed and Jack has no garbage collector, so
+    // printing literals inside the game loop slowly eats the whole heap.
+    static String sScore, sCrops, sCows, sHelp;
+
+    // ------------------------------------------------------------------
+    //  Program entry point
+    // ------------------------------------------------------------------
+    function void main() {
+        var boolean playing;
+        let seed = 1234;
+        let quit = false;
+        let sScore = "SCORE:";
+        let sCrops = "  CROPS:";
+        let sCows = "/6  COWS:";
+        let sHelp = "/3  SPACE=HIT E=FIX    ";
+        do Main.splash();
+        let playing = true;
+        while (playing) {
+            do Main.newGame();
+            do Main.play();
+            do Main.cleanup();
+            if (quit) {
+                let playing = false;
+            } else {
+                let playing = Main.endScreen();
+            }
+        }
+        do Screen.clearScreen();
+        do Output.moveCursor(10, 22);
+        do Output.printString("SEE YOU AT THE EZBA!");
+        return;
+    }
+
+    // ------------------------------------------------------------------
+    //  Random numbers (the Jack OS has none, so we use a small LCG)
+    // ------------------------------------------------------------------
+    /** Returns a pseudo-random number in the range 0 .. n-1. */
+    function int rand(int n) {
+        var int v;
+        let seed = (seed * 25173) + 13849;
+        let v = seed & 32767;
+        let v = v / 16;
+        return v - ((v / n) * n);
+    }
+
+    // ------------------------------------------------------------------
+    //  Screens
+    // ------------------------------------------------------------------
+    function void splash() {
+        var Farmer f;
+        var Crop c;
+        var Crow w;
+        var EvilFarmer e;
+
+        do Screen.clearScreen();
+        do Output.moveCursor(2, 21);
+        do Output.printString("== EL EZBA DEFENDER ==");
+        do Output.moveCursor(5, 12);
+        do Output.printString("Crows and evil farmers attack your farm!");
+        do Output.moveCursor(6, 12);
+        do Output.printString("They flood and burn the crops, and");
+        do Output.moveCursor(7, 12);
+        do Output.printString("poison the cows. Defend the ezba!");
+        do Output.moveCursor(9, 14);
+        do Output.printString("ARROWS : move");
+        do Output.moveCursor(10, 14);
+        do Output.printString("SPACE  : hit with the pitchfork");
+        do Output.moveCursor(11, 14);
+        do Output.printString("E      : fix crop / cure cow (stand close)");
+        do Output.moveCursor(12, 14);
+        do Output.printString("ESC    : quit");
+
+        // a little preview of the cast
+        let f = Farmer.new(150, 150);
+        do f.draw();
+        let c = Crop.new(230, 156);
+        do c.draw();
+        let w = Crow.new();
+        do w.spawn(300, 150, 0);
+        do w.draw();
+        let e = EvilFarmer.new();
+        do e.spawn(360, 150, 2, 0, 1);
+        do e.draw();
+        do f.dispose();
+        do c.dispose();
+        do w.dispose();
+        do e.dispose();
+
+        do Output.moveCursor(19, 21);
+        do Output.printString("PRESS ANY KEY TO START");
+
+        // the time the player takes to press a key seeds the random generator
+        while (Keyboard.keyPressed() = 0) {
+            let seed = seed + 7;
+        }
+        while (~(Keyboard.keyPressed() = 0)) {
+            do Sys.wait(10);
+        }
+        return;
+    }
+
+    /** Shows the result; returns true if the player wants to play again. */
+    function boolean endScreen() {
+        var int key;
+        var boolean waiting, again;
+
+        do Screen.clearScreen();
+        do Output.moveCursor(8, 21);
+        if (won) {
+            do Output.printString("YOU SAVED THE EZBA!");
+        } else {
+            do Output.printString("THE EZBA IS LOST...");
+        }
+        do Output.moveCursor(10, 23);
+        do Output.printString("FINAL SCORE: ");
+        do Output.printInt(score);
+        do Output.moveCursor(13, 16);
+        do Output.printString("PRESS R TO PLAY AGAIN OR Q TO QUIT");
+
+        while (~(Keyboard.keyPressed() = 0)) {
+            do Sys.wait(10);
+        }
+        let waiting = true;
+        let again = false;
+        while (waiting) {
+            let key = Keyboard.keyPressed();
+            if ((key = 82) | (key = 114)) {
+                let again = true;
+                let waiting = false;
+            }
+            if ((key = 81) | (key = 113)) {
+                let again = false;
+                let waiting = false;
+            }
+        }
+        while (~(Keyboard.keyPressed() = 0)) {
+            do Sys.wait(10);
+        }
+        return again;
+    }
+
+    // ------------------------------------------------------------------
+    //  Game setup / teardown
+    // ------------------------------------------------------------------
+    function void newGame() {
+        var int i;
+        do Screen.clearScreen();
+
+        let score = 0;
+        let frame = 0;
+        let difficulty = 0;
+        let crowTimer = 40;
+        let evilTimer = 150;
+        let cropsAlive = 6;
+        let animalsAlive = 3;
+        let gameOver = false;
+        let won = false;
+
+        let farmer = Farmer.new(240, 150);
+
+        // 2 rows of 3 crops
+        let crops = Array.new(6);
+        let i = 0;
+        while (i < 6) {
+            if (i < 3) {
+                let crops[i] = Crop.new(100 + (i * 120), 50);
+            } else {
+                let crops[i] = Crop.new(100 + ((i - 3) * 120), 125);
+            }
+            let i = i + 1;
+        }
+
+        // 3 cows, each wandering in its own strip at the bottom
+        let animals = Array.new(3);
+        let i = 0;
+        while (i < 3) {
+            let animals[i] = Animal.new(30 + (i * 160), 218, 20 + (i * 160), 140 + (i * 160));
+            let i = i + 1;
+        }
+
+        let crows = Array.new(3);
+        let i = 0;
+        while (i < 3) {
+            let crows[i] = Crow.new();
+            let i = i + 1;
+        }
+
+        let evils = Array.new(2);
+        let i = 0;
+        while (i < 2) {
+            let evils[i] = EvilFarmer.new();
+            let i = i + 1;
+        }
+
+        do Main.drawBackground();
+        return;
+    }
+
+    /** Frees every object of the finished game. */
+    function void cleanup() {
+        var int i;
+        var Crop c;
+        var Animal a;
+        var Crow w;
+        var EvilFarmer e;
+
+        do farmer.dispose();
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            do c.dispose();
+            let i = i + 1;
+        }
+        do crops.dispose();
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            do a.dispose();
+            let w = crows[i];
+            do w.dispose();
+            let i = i + 1;
+        }
+        do animals.dispose();
+        do crows.dispose();
+        let i = 0;
+        while (i < 2) {
+            let e = evils[i];
+            do e.dispose();
+            let i = i + 1;
+        }
+        do evils.dispose();
+        return;
+    }
+
+    /** Static decoration: HUD separator line and the fence at the bottom. */
+    function void drawBackground() {
+        var int fenceX;
+        do Screen.setColor(true);
+        do Screen.drawLine(0, 13, 511, 13);
+        do Screen.drawLine(0, 246, 511, 246);
+        do Screen.drawLine(0, 251, 511, 251);
+        let fenceX = 0;
+        while (fenceX < 510) {
+            do Screen.drawLine(fenceX, 240, fenceX, 254);
+            let fenceX = fenceX + 24;
+        }
+        return;
+    }
+
+    // ------------------------------------------------------------------
+    //  Main game loop
+    // ------------------------------------------------------------------
+    function void play() {
+        while (~gameOver) {
+            do Main.eraseAll();
+            do Main.handleInput();
+            do Main.update();
+            do Main.drawAll();
+            if ((frame & 3) = 0) {
+                do Main.hud();
+            }
+            do Sys.wait(30);
+            let frame = frame + 1;
+        }
+        return;
+    }
+
+    function void handleInput() {
+        var int key;
+        let key = Keyboard.keyPressed();
+        if (key = 130) { do farmer.move(-1, 0); }
+        if (key = 132) { do farmer.move(1, 0); }
+        if (key = 131) { do farmer.move(0, -1); }
+        if (key = 133) { do farmer.move(0, 1); }
+        if (key = 32) { do farmer.swing(); }
+        if ((key = 69) | (key = 101)) { do Main.fixNearby(); }
+        if (key = 140) {
+            let quit = true;
+            let gameOver = true;
+        }
+        return;
+    }
+
+    /** E key: fixes every sick crop and cures every poisoned cow near the farmer. */
+    function void fixNearby() {
+        var int i;
+        var Crop c;
+        var Animal a;
+        var boolean did;
+
+        let did = false;
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            if (c.isSick()) {
+                if (farmer.near(c.getX() + 8, c.getY() + 8)) {
+                    do c.fix();
+                    let score = score + 1;
+                    let did = true;
+                }
+            }
+            let i = i + 1;
+        }
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            if (a.isPoisoned()) {
+                if (farmer.near(a.getX() + 10, a.getY() + 6)) {
+                    do a.cure();
+                    let score = score + 1;
+                    let did = true;
+                }
+            }
+            let i = i + 1;
+        }
+        if (did) {
+            do farmer.startFix();
+        }
+        return;
+    }
+
+    // ------------------------------------------------------------------
+    //  Game logic
+    // ------------------------------------------------------------------
+    function void update() {
+        var int i;
+        var Crop c;
+        var Animal a;
+
+        do farmer.tick();
+
+        // difficulty rises with the score (0, 1, 2)
+        let difficulty = score / 8;
+        if (difficulty > 2) { let difficulty = 2; }
+
+        do Main.updateCrows();
+        do Main.updateEvils();
+
+        // slow clock: floods / fires / poison hurt, healthy crops regrow
+        if ((frame & 15) = 0) {
+            let i = 0;
+            while (i < 6) {
+                let c = crops[i];
+                do c.tick();
+                let i = i + 1;
+            }
+            let i = 0;
+            while (i < 3) {
+                let a = animals[i];
+                do a.tick();
+                let i = i + 1;
+            }
+        }
+        if ((frame & 127) = 0) {
+            let i = 0;
+            while (i < 6) {
+                let c = crops[i];
+                do c.grow();
+                let i = i + 1;
+            }
+        }
+
+        // cows wander
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            do a.move(Main.rand(80));
+            let i = i + 1;
+        }
+
+        // count what is left and decide if the game is over
+        let cropsAlive = 0;
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            if (~(c.isDestroyed())) { let cropsAlive = cropsAlive + 1; }
+            let i = i + 1;
+        }
+        let animalsAlive = 0;
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            if (a.isAlive()) { let animalsAlive = animalsAlive + 1; }
+            let i = i + 1;
+        }
+        if (score > 39) {
+            let won = true;
+            let gameOver = true;
+        }
+        if ((cropsAlive = 0) | (animalsAlive = 0)) {
+            let gameOver = true;
+        }
+        return;
+    }
+
+    function void updateCrows() {
+        var int i, maxC;
+        var Crow w;
+        var Crop c;
+
+        let i = 0;
+        while (i < 3) {
+            let w = crows[i];
+            if (w.isAlive()) {
+                // hit by the pitchfork?
+                if (farmer.isSwinging()) {
+                    if (farmer.reaches(w.getX() + 6, w.getY() + 4)) {
+                        do w.kill();
+                        let score = score + 1;
+                    }
+                }
+            }
+            if (w.isAlive()) {
+                let c = crops[w.getTarget()];
+                if (c.isDestroyed()) {
+                    do w.setTarget(Main.pickCrop());
+                    let c = crops[w.getTarget()];
+                }
+                do w.moveToward(c.getX() + 2, c.getY() - 8, Main.rand(3) - 1);
+                if (w.atTarget(c.getX() + 2, c.getY() - 8)) {
+                    if ((frame & 15) = 8) {
+                        do c.damage(1);
+                    }
+                }
+            }
+            let i = i + 1;
+        }
+
+        // new crows arrive from the top of the screen
+        if (crowTimer > 0) { let crowTimer = crowTimer - 1; }
+        let maxC = 1 + difficulty;
+        let i = 0;
+        while (i < maxC) {
+            let w = crows[i];
+            if ((crowTimer = 0) & (~(w.isAlive()))) {
+                do w.spawn(Main.rand(480), 16, Main.pickCrop());
+                let crowTimer = 90 - (difficulty * 20) + Main.rand(40);
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    function void updateEvils() {
+        var int i, t, k, fd, sx, maxE, tx, ty;
+        var EvilFarmer e;
+        var Crop c;
+        var Animal a;
+        var boolean valid;
+
+        let i = 0;
+        while (i < 2) {
+            let e = evils[i];
+
+            // hit by the pitchfork?
+            if (e.isAlive()) {
+                if (farmer.isSwinging()) {
+                    if (farmer.reaches(e.getX() + 7, e.getY() + 11)) {
+                        do e.kill();
+                        let score = score + 2;
+                    }
+                }
+            }
+
+            if (e.isAlive()) {
+                if (e.getState() = 0) {
+                    // walking to the target
+                    let valid = true;
+                    let tx = 0;
+                    let ty = 0;
+                    if (e.getKind() = 3) {
+                        let a = animals[e.getTarget()];
+                        if (~(a.isHealthy())) {
+                            let t = Main.pickAnimal();
+                            if (t < 0) {
+                                let valid = false;
+                            } else {
+                                do e.setTarget(t);
+                                let a = animals[t];
+                            }
+                        }
+                        if (valid) {
+                            let tx = a.getX() - 16;
+                            let ty = a.getY() - 10;
+                        }
+                    } else {
+                        let c = crops[e.getTarget()];
+                        if (c.isDestroyed()) {
+                            let t = Main.pickCrop();
+                            do e.setTarget(t);
+                            let c = crops[t];
+                        }
+                        let tx = c.getX() - 16;
+                        let ty = c.getY() - 4;
+                    }
+
+                    if (valid) {
+                        if (e.atTarget(tx, ty)) {
+                            do e.startWork();
+                        } else {
+                            do e.moveToward(tx, ty);
+                        }
+                    } else {
+                        do e.flee();
+                    }
+                } else {
+                    if (e.getState() = 1) {
+                        // sabotaging: when finished, do the damage and run
+                        if (e.tickWork()) {
+                            if (e.getKind() = 1) {
+                                let c = crops[e.getTarget()];
+                                do c.flood();
+                            }
+                            if (e.getKind() = 2) {
+                                let c = crops[e.getTarget()];
+                                do c.ignite();
+                            }
+                            if (e.getKind() = 3) {
+                                let a = animals[e.getTarget()];
+                                do a.poison();
+                            }
+                            do e.flee();
+                        }
+                    } else {
+                        do e.moveFlee();
+                    }
+                }
+            }
+            let i = i + 1;
+        }
+
+        // new evil farmers sneak in from the left or right edge
+        if (evilTimer > 0) { let evilTimer = evilTimer - 1; }
+        if (score > 4) { let maxE = 2; } else { let maxE = 1; }
+        let i = 0;
+        while (i < maxE) {
+            let e = evils[i];
+            if ((evilTimer = 0) & (~(e.isAlive()))) {
+                let k = 1 + Main.rand(3);
+                let t = 0;
+                if (k = 3) {
+                    let t = Main.pickAnimal();
+                    if (t < 0) { let k = 1; }
+                }
+                if (k < 3) {
+                    let t = Main.pickCrop();
+                }
+                if (Main.rand(2) = 0) {
+                    let sx = 2;
+                    let fd = -1;
+                } else {
+                    let sx = 488;
+                    let fd = 1;
+                }
+                do e.spawn(sx, 30 + Main.rand(150), k, t, fd);
+                let evilTimer = 220 - (difficulty * 30) + Main.rand(60);
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Picks a random crop that is not destroyed yet. */
+    function int pickCrop() {
+        var int i, n, k;
+        var Crop c;
+
+        let n = 0;
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            if (~(c.isDestroyed())) { let n = n + 1; }
+            let i = i + 1;
+        }
+        if (n = 0) { return 0; }
+        let k = Main.rand(n);
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            if (~(c.isDestroyed())) {
+                if (k = 0) { return i; }
+                let k = k - 1;
+            }
+            let i = i + 1;
+        }
+        return 0;
+    }
+
+    /** Picks a random healthy cow, or returns -1 if there is none. */
+    function int pickAnimal() {
+        var int i, n, k;
+        var Animal a;
+
+        let n = 0;
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            if (a.isHealthy()) { let n = n + 1; }
+            let i = i + 1;
+        }
+        if (n = 0) { return -1; }
+        let k = Main.rand(n);
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            if (a.isHealthy()) {
+                if (k = 0) { return i; }
+                let k = k - 1;
+            }
+            let i = i + 1;
+        }
+        return -1;
+    }
+
+    // ------------------------------------------------------------------
+    //  Drawing
+    // ------------------------------------------------------------------
+    function void eraseAll() {
+        var int i;
+        var Animal a;
+        var Crow w;
+        var EvilFarmer e;
+
+        do farmer.erase();
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            do a.erase();
+            let w = crows[i];
+            if (w.isAlive()) { do w.erase(); }
+            let i = i + 1;
+        }
+        let i = 0;
+        while (i < 2) {
+            let e = evils[i];
+            if (e.isAlive()) { do e.erase(); }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    function void drawAll() {
+        var int i;
+        var Crop c;
+        var Animal a;
+        var Crow w;
+        var EvilFarmer e;
+
+        let i = 0;
+        while (i < 6) {
+            let c = crops[i];
+            do c.draw();
+            let i = i + 1;
+        }
+        let i = 0;
+        while (i < 3) {
+            let a = animals[i];
+            do a.draw();
+            let i = i + 1;
+        }
+        let i = 0;
+        while (i < 2) {
+            let e = evils[i];
+            if (e.isAlive()) { do e.draw(); }
+            let i = i + 1;
+        }
+        let i = 0;
+        while (i < 3) {
+            let w = crows[i];
+            if (w.isAlive()) { do w.draw(); }
+            let i = i + 1;
+        }
+        do farmer.draw();
+        return;
+    }
+
+    function void hud() {
+        do Output.moveCursor(0, 0);
+        do Output.printString(sScore);
+        do Output.printInt(score);
+        do Output.printString(sCrops);
+        do Output.printInt(cropsAlive);
+        do Output.printString(sCows);
+        do Output.printInt(animalsAlive);
+        do Output.printString(sHelp);
+        return;
+    }
+}

@@ -1,0 +1,545 @@
+function Crop.new 0
+    push constant 4
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push constant 8
+    pop this 2
+    push constant 0
+    pop this 3
+    push pointer 0
+    return
+function Crop.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function Crop.getX 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Crop.getY 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function Crop.getState 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    return
+function Crop.isDestroyed 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 3
+    eq
+    return
+function Crop.isSick 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    push this 3
+    push constant 2
+    eq
+    or
+    return
+function Crop.damage 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 3
+    eq
+    not
+    not
+    if-goto Crop_1
+    push this 2
+    push argument 1
+    sub
+    pop this 2
+    push this 2
+    push constant 1
+    lt
+    not
+    if-goto Crop_3
+    push constant 0
+    pop this 2
+    push constant 3
+    pop this 3
+    goto Crop_2
+label Crop_3
+label Crop_2
+    goto Crop_0
+label Crop_1
+label Crop_0
+    push constant 0
+    return
+function Crop.flood 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    not
+    if-goto Crop_5
+    push constant 1
+    pop this 3
+    goto Crop_4
+label Crop_5
+label Crop_4
+    push constant 0
+    return
+function Crop.ignite 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    push this 3
+    push constant 1
+    eq
+    or
+    not
+    if-goto Crop_7
+    push constant 2
+    pop this 3
+    goto Crop_6
+label Crop_7
+label Crop_6
+    push constant 0
+    return
+function Crop.fix 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    push this 3
+    push constant 2
+    eq
+    or
+    not
+    if-goto Crop_9
+    push constant 0
+    pop this 3
+    goto Crop_8
+label Crop_9
+label Crop_8
+    push constant 0
+    return
+function Crop.tick 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto Crop_11
+    push pointer 0
+    push constant 1
+    call Crop.damage 2
+    pop temp 0
+    goto Crop_10
+label Crop_11
+label Crop_10
+    push this 3
+    push constant 2
+    eq
+    not
+    if-goto Crop_13
+    push pointer 0
+    push constant 2
+    call Crop.damage 2
+    pop temp 0
+    goto Crop_12
+label Crop_13
+label Crop_12
+    push constant 0
+    return
+function Crop.grow 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push constant 0
+    eq
+    push this 2
+    push constant 8
+    lt
+    and
+    not
+    if-goto Crop_15
+    push this 2
+    push constant 1
+    add
+    pop this 2
+    goto Crop_14
+label Crop_15
+label Crop_14
+    push constant 0
+    return
+function Crop.draw 3
+    push argument 0
+    pop pointer 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push this 1
+    push constant 2
+    sub
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 17
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push this 0
+    push this 1
+    push constant 16
+    add
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 3
+    push constant 3
+    eq
+    not
+    if-goto Crop_17
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 9
+    add
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 9
+    add
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Crop_16
+label Crop_17
+    push this 2
+    push constant 2
+    call Math.multiply 2
+    pop local 0
+    push this 1
+    push constant 16
+    add
+    push local 0
+    sub
+    pop local 1
+    push local 0
+    push constant 0
+    gt
+    not
+    if-goto Crop_19
+    push this 0
+    push constant 8
+    add
+    push local 1
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push local 1
+    push constant 2
+    call Screen.drawCircle 3
+    pop temp 0
+    goto Crop_18
+label Crop_19
+label Crop_18
+    push this 2
+    push constant 2
+    gt
+    not
+    if-goto Crop_21
+    push this 1
+    push constant 16
+    add
+    push local 0
+    push constant 2
+    call Math.divide 2
+    sub
+    pop local 2
+    push this 0
+    push constant 2
+    add
+    push local 2
+    push constant 2
+    sub
+    push this 0
+    push constant 7
+    add
+    push local 2
+    call Screen.drawRectangle 4
+    pop temp 0
+    push this 0
+    push constant 9
+    add
+    push local 2
+    push constant 2
+    sub
+    push this 0
+    push constant 14
+    add
+    push local 2
+    call Screen.drawRectangle 4
+    pop temp 0
+    goto Crop_20
+label Crop_21
+label Crop_20
+    push this 3
+    push constant 1
+    eq
+    not
+    if-goto Crop_23
+    push this 0
+    push this 1
+    push constant 13
+    add
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 11
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 11
+    add
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 13
+    add
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 11
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 11
+    add
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push this 1
+    push constant 15
+    add
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 4
+    add
+    push this 1
+    push constant 13
+    add
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 15
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 15
+    add
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 13
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 12
+    add
+    push this 1
+    push constant 13
+    add
+    push this 0
+    push constant 16
+    add
+    push this 1
+    push constant 15
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Crop_22
+label Crop_23
+label Crop_22
+    push this 3
+    push constant 2
+    eq
+    not
+    if-goto Crop_25
+    push this 0
+    push constant 2
+    add
+    push this 1
+    push constant 16
+    add
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 4
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 4
+    add
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 8
+    add
+    push this 1
+    push constant 16
+    add
+    push this 0
+    push constant 11
+    add
+    push this 1
+    push constant 6
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 11
+    add
+    push this 1
+    push constant 6
+    add
+    push this 0
+    push constant 14
+    add
+    push this 1
+    push constant 16
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 4
+    add
+    push this 0
+    push constant 5
+    add
+    push this 1
+    push constant 12
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    push this 0
+    push constant 11
+    add
+    push this 1
+    push constant 6
+    add
+    push this 0
+    push constant 11
+    add
+    push this 1
+    push constant 12
+    add
+    call Screen.drawLine 4
+    pop temp 0
+    goto Crop_24
+label Crop_25
+label Crop_24
+label Crop_16
+    push constant 0
+    return

@@ -1,0 +1,120 @@
+/**
+ * Farmer: the player's character (El Fallah).
+ * Moves with the arrow keys, hits enemies with a pitchfork (SPACE)
+ * and fixes flooded / burning crops and poisoned animals (E).
+ */
+class Farmer {
+    field int x, y;          // top-left corner of the sprite
+    field int fx;            // facing direction: 1 = right, -1 = left
+    field int swingT;        // frames left in the current pitchfork swing
+    field int cooldown;      // frames before the next swing is allowed
+    field int fixT;          // frames left of the "fixing" animation
+    field int walk;          // walking animation counter
+
+    constructor Farmer new(int ax, int ay) {
+        let x = ax;
+        let y = ay;
+        let fx = 1;
+        let swingT = 0;
+        let cooldown = 0;
+        let fixT = 0;
+        let walk = 0;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Moves the farmer by (dx, dy) steps of 4 pixels, staying inside the field. */
+    method void move(int dx, int dy) {
+        let walk = walk + 1;
+        let x = x + (dx * 4);
+        let y = y + (dy * 4);
+        if (dx > 0) { let fx = 1; }
+        if (dx < 0) { let fx = -1; }
+        if (x < 20) { let x = 20; }
+        if (x > 460) { let x = 460; }
+        if (y < 22) { let y = 22; }
+        if (y > 214) { let y = 214; }
+        return;
+    }
+
+    /** Starts a pitchfork swing if the cooldown allows it. */
+    method void swing() {
+        if (cooldown = 0) {
+            let swingT = 4;
+            let cooldown = 8;
+        }
+        return;
+    }
+
+    method void startFix() {
+        let fixT = 6;
+        return;
+    }
+
+    /** Called once per frame to advance the timers. */
+    method void tick() {
+        if (swingT > 0) { let swingT = swingT - 1; }
+        if (cooldown > 0) { let cooldown = cooldown - 1; }
+        if (fixT > 0) { let fixT = fixT - 1; }
+        return;
+    }
+
+    method boolean isSwinging() {
+        return swingT > 0;
+    }
+
+    /** True if the point (cx, cy) is inside the pitchfork's reach. */
+    method boolean reaches(int cx, int cy) {
+        return (Math.abs(cx - (x + 6)) < 30) & (Math.abs(cy - (y + 12)) < 20);
+    }
+
+    /** True if the point (cx, cy) is close enough for helping (fix / cure). */
+    method boolean near(int cx, int cy) {
+        return (Math.abs(cx - (x + 6)) < 30) & (Math.abs(cy - (y + 12)) < 30);
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x - 17, y - 8, x + 29, y + 22);
+        return;
+    }
+
+    method void draw() {
+        var int px, o;
+        do Screen.setColor(true);
+
+        // straw hat
+        do Screen.drawRectangle(x, y + 3, x + 12, y + 4);
+        do Screen.drawRectangle(x + 3, y, x + 9, y + 3);
+        // head
+        do Screen.drawCircle(x + 6, y + 8, 3);
+        // body
+        do Screen.drawRectangle(x + 3, y + 12, x + 9, y + 18);
+        // legs (animated)
+        let o = walk & 1;
+        do Screen.drawLine(x + 4, y + 18, x + 4 - o, y + 22);
+        do Screen.drawLine(x + 8, y + 18, x + 8 + o, y + 22);
+
+        // pitchfork
+        if (swingT > 0) {
+            do Screen.drawLine(x + 6 + (fx * 4), y + 14, x + 6 + (fx * 22), y + 14);
+            do Screen.drawLine(x + 6 + (fx * 22), y + 10, x + 6 + (fx * 22), y + 18);
+        } else {
+            let px = x + 6 + (fx * 8);
+            do Screen.drawLine(px, y + 8, px, y + 22);
+            do Screen.drawLine(px - 2, y + 6, px - 2, y + 9);
+            do Screen.drawLine(px + 2, y + 6, px + 2, y + 9);
+            do Screen.drawLine(px - 2, y + 9, px + 2, y + 9);
+        }
+
+        // little bubble above the head while fixing something
+        if (fixT > 0) {
+            do Screen.drawCircle(x + 6, y - 4, 3);
+        }
+        return;
+    }
+}
