@@ -1,0 +1,128 @@
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ *
+ * Heap layout: addresses 2048-16383.
+ * Free list: singly linked list of segments. For a segment starting at
+ * address s:  s[0] = number of usable words (the header word not counted),
+ *             s[1] = address of the next free segment (0 = end of list).
+ * An allocated block keeps its header word at (block - 1) holding its size.
+ */
+class Memory {
+    static Array ram;
+    static Array freeList;
+
+    /** Initializes the class. */
+    function void init() {
+        let ram = 0;
+        let freeList = 2048;
+        let freeList[0] = 14335;   // 16383 - 2049 + 1 usable words
+        let freeList[1] = 0;       // null
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return ram[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let ram[address] = value;
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function Array alloc(int size) {
+        var Array cur, prev, block;
+        var int newLen;
+        var boolean retried;
+
+        if (size < 1) {
+            do Sys.error(5);
+            return 0;
+        }
+
+        let retried = false;
+        while (true) {
+            let prev = 0;
+            let cur = freeList;
+            while (~(cur = 0)) {
+                if (~(cur[0] < size)) {
+                    if (cur[0] > (size + 1)) {
+                        // split: carve the block from the end of the segment
+                        let newLen = cur[0] - size - 1;
+                        let cur[0] = newLen;
+                        let block = cur + newLen + 1;
+                        let block[0] = size;
+                        return block + 1;
+                    } else {
+                        // use the whole segment: unlink it from the free list
+                        if (prev = 0) {
+                            let freeList = cur[1];
+                        } else {
+                            let prev[1] = cur[1];
+                        }
+                        return cur + 1;
+                    }
+                }
+                let prev = cur;
+                let cur = cur[1];
+            }
+            if (retried) {
+                do Sys.error(6);
+                return 0;
+            }
+            do Memory.defrag();
+            let retried = true;
+        }
+        return 0;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array seg;
+
+        let seg = o - 1;
+        let seg[1] = freeList;
+        let freeList = seg;
+        return;
+    }
+
+    /** Merges physically adjacent free segments. */
+    function void defrag() {
+        var Array a, b, prevB;
+        var boolean merged;
+
+        let merged = true;
+        while (merged) {
+            let merged = false;
+            let a = freeList;
+            while (~(a = 0)) {
+                let prevB = 0;
+                let b = freeList;
+                while (~(b = 0)) {
+                    if ((~(b = a)) & (b = (a + a[0] + 1))) {
+                        // b directly follows a in RAM: absorb it
+                        let a[0] = a[0] + b[0] + 1;
+                        if (prevB = 0) {
+                            let freeList = b[1];
+                        } else {
+                            let prevB[1] = b[1];
+                        }
+                        let merged = true;
+                        let b = 0;
+                    } else {
+                        let prevB = b;
+                        let b = b[1];
+                    }
+                }
+                let a = a[1];
+            }
+        }
+        return;
+    }
+}

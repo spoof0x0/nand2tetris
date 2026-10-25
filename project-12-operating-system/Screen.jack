@@ -1,0 +1,219 @@
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 256 rows (indexed 0..255, top to bottom)
+ * of 512 pixels each (indexed 0..511, left to right). The top left pixel on
+ * the screen is indexed (0,0).
+ * Screen memory map: base 16384, 32 words per row, bit 0 = leftmost pixel.
+ */
+class Screen {
+    static Array screen;
+    static Array twoToThe;
+    static boolean color;
+
+    /** Initializes the Screen. */
+    function void init() {
+        var int i, v;
+
+        let screen = 16384;
+        let color = true;
+
+        let twoToThe = Array.new(16);
+        let i = 0;
+        let v = 1;
+        while (i < 16) {
+            let twoToThe[i] = v;
+            let v = v + v;
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+        var int i;
+
+        let i = 0;
+        while (i < 8192) {
+            let screen[i] = 0;
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Sets the current color, to be used for all subsequent drawXXX commands.
+     *  Black is represented by true, white by false. */
+    function void setColor(boolean b) {
+        let color = b;
+        return;
+    }
+
+    /** Draws the (x,y) pixel, using the current color. */
+    function void drawPixel(int x, int y) {
+        var int addr, mask;
+
+        if ((x < 0) | (x > 511) | (y < 0) | (y > 255)) {
+            do Sys.error(7);
+            return;
+        }
+
+        let addr = (y * 32) + (x / 16);
+        let mask = twoToThe[x & 15];
+        if (color) {
+            let screen[addr] = screen[addr] | mask;
+        } else {
+            let screen[addr] = screen[addr] & (~mask);
+        }
+        return;
+    }
+
+    /** Helper: paints the bits of mask in screen word w with the current color. */
+    function void paint(int w, int mask) {
+        if (color) {
+            let screen[w] = screen[w] | mask;
+        } else {
+            let screen[w] = screen[w] & (~mask);
+        }
+        return;
+    }
+
+    /** Helper: draws a horizontal line from (x1,y) to (x2,y), x1 <= x2,
+     *  filling whole words where possible. Coordinates are assumed valid. */
+    function void horizontal(int x1, int x2, int y) {
+        var int startWord, endWord, startBit, endBit;
+        var int leftMask, rightMask, w, row, fill;
+
+        let row = y * 32;
+        let startWord = row + (x1 / 16);
+        let endWord = row + (x2 / 16);
+        let startBit = x1 & 15;
+        let endBit = x2 & 15;
+
+        // bits startBit..15 set, and bits 0..endBit set
+        let leftMask = -twoToThe[startBit];
+        let rightMask = (twoToThe[endBit] - 1) | twoToThe[endBit];
+
+        if (startWord = endWord) {
+            do Screen.paint(startWord, leftMask & rightMask);
+            return;
+        }
+
+        do Screen.paint(startWord, leftMask);
+
+        if (color) {
+            let fill = -1;
+        } else {
+            let fill = 0;
+        }
+        let w = startWord + 1;
+        while (w < endWord) {
+            let screen[w] = fill;
+            let w = w + 1;
+        }
+
+        do Screen.paint(endWord, rightMask);
+        return;
+    }
+
+    /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        var int dx, dy, a, b, diff, ydir, t;
+
+        if ((x1 < 0) | (x1 > 511) | (x2 < 0) | (x2 > 511) |
+            (y1 < 0) | (y1 > 255) | (y2 < 0) | (y2 > 255)) {
+            do Sys.error(8);
+            return;
+        }
+
+        // always draw from left to right
+        if (x1 > x2) {
+            let t = x1;
+            let x1 = x2;
+            let x2 = t;
+            let t = y1;
+            let y1 = y2;
+            let y2 = t;
+        }
+
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+
+        if (dy = 0) {
+            do Screen.horizontal(x1, x2, y1);
+            return;
+        }
+
+        if (dy < 0) {
+            let ydir = -1;
+            let dy = -dy;
+        } else {
+            let ydir = 1;
+        }
+
+        if (dx = 0) {
+            // vertical line
+            let b = 0;
+            while (~(b > dy)) {
+                do Screen.drawPixel(x1, y1 + (b * ydir));
+                let b = b + 1;
+            }
+            return;
+        }
+
+        let a = 0;
+        let b = 0;
+        let diff = 0;
+        while ((~(a > dx)) & (~(b > dy))) {
+            do Screen.drawPixel(x1 + a, y1 + (b * ydir));
+            if (diff < 0) {
+                let a = a + 1;
+                let diff = diff + dy;
+            } else {
+                let b = b + 1;
+                let diff = diff - dx;
+            }
+        }
+        return;
+    }
+
+    /** Draws a filled rectangle whose top left corner is (x1, y1)
+     *  and bottom right corner is (x2,y2), using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        var int y;
+
+        if ((x1 > x2) | (y1 > y2) |
+            (x1 < 0) | (x2 > 511) | (y1 < 0) | (y2 > 255)) {
+            do Sys.error(9);
+            return;
+        }
+
+        let y = y1;
+        while (~(y > y2)) {
+            do Screen.horizontal(x1, x2, y);
+            let y = y + 1;
+        }
+        return;
+    }
+
+    /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    function void drawCircle(int x, int y, int r) {
+        var int dy, halfWidth;
+
+        if ((x < 0) | (x > 511) | (y < 0) | (y > 255)) {
+            do Sys.error(10);
+            return;
+        }
+        if ((r < 0) | (r > 181) |
+            ((x - r) < 0) | ((x + r) > 511) | ((y - r) < 0) | ((y + r) > 255)) {
+            do Sys.error(11);
+            return;
+        }
+
+        let dy = -r;
+        while (~(dy > r)) {
+            let halfWidth = Math.sqrt((r * r) - (dy * dy));
+            do Screen.horizontal(x - halfWidth, x + halfWidth, y + dy);
+            let dy = dy + 1;
+        }
+        return;
+    }
+}

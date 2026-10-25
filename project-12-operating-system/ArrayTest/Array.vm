@@ -1,0 +1,26 @@
+function Array.new 0
+    push argument 0
+    push constant 1
+    lt
+    not
+    if-goto Array_1
+    push constant 2
+    call Sys.error 1
+    pop temp 0
+    push constant 0
+    return
+    goto Array_0
+label Array_1
+label Array_0
+    push argument 0
+    call Memory.alloc 1
+    return
+function Array.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    pop temp 0
+    push constant 0
+    pop temp 0
+    push constant 0
+    return

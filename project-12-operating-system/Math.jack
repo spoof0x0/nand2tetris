@@ -1,0 +1,135 @@
+/**
+ *  A library of commonly used mathematical functions.
+ *  All functions run in O(n), where n is the number of bits used
+ *  for representing a two's complement integer value (16 in the Hack computer).
+ *  Note: Jack compilers implement multiplication and division
+ *  using calls to OS functions in this class.
+ */
+class Math {
+    static int n;             // Number of bits used for representing a two's complement integer
+    static Array powersOfTwo; // Stores 2^0, 2^1, 2^2,..., 2^(n-1)
+
+    /** Initializes the Math library. */
+    function void init() {
+        var int i, val;
+
+        let n = 16;
+        let powersOfTwo = Array.new(n);
+        let i = 0;
+        let val = 1;
+        while (i < n) {
+            let powersOfTwo[i] = val;
+            let val = val + val;   // not val * 2: that would call Math.multiply
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Returns the product of x and y. */
+    function int multiply(int x, int y) {
+        var int sum, shiftedX, j;
+        var boolean neg;
+
+        let neg = ((x < 0) & (y > 0)) | ((x > 0) & (y < 0));
+        let x = Math.abs(x);
+        let y = Math.abs(y);
+
+        let sum = 0;
+        let shiftedX = x;
+        let j = 0;
+        while (j < n) {
+            if (~((y & powersOfTwo[j]) = 0)) {
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;
+            let j = j + 1;
+        }
+
+        if (neg) {
+            return -sum;
+        }
+        return sum;
+    }
+
+    /** Returns the integer part of x / y. */
+    function int divide(int x, int y) {
+        var int q;
+        var boolean neg;
+
+        if (y = 0) {
+            do Sys.error(3);
+            return 0;
+        }
+
+        let neg = ((x < 0) & (y > 0)) | ((x > 0) & (y < 0));
+        let q = Math.divideAbs(Math.abs(x), Math.abs(y));
+
+        if (neg) {
+            return -q;
+        }
+        return q;
+    }
+
+    /** Helper: x / y for non-negative x, positive y (recursive, O(n)). */
+    function int divideAbs(int x, int y) {
+        var int q;
+
+        // y < 0 means y + y overflowed; y > x means quotient is 0
+        if ((y < 0) | (y > x)) {
+            return 0;
+        }
+
+        let q = Math.divideAbs(x, y + y);
+        if ((x - (Math.multiply(q + q, y))) < y) {
+            return q + q;
+        }
+        return q + q + 1;
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int y, j, t, t2;
+
+        if (x < 0) {
+            do Sys.error(4);
+            return 0;
+        }
+
+        let y = 0;
+        let j = 7;             // (n / 2) - 1, written as a constant to avoid a division call
+        while (~(j < 0)) {
+            let t = y + powersOfTwo[j];
+            let t2 = Math.multiply(t, t);
+            // t2 > 0 guards against overflow
+            if ((~(t2 > x)) & (t2 > 0)) {
+                let y = t;
+            }
+            let j = j - 1;
+        }
+        return y;
+    }
+
+    /** Returns the greater value. */
+    function int max(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    /** Returns the smaller value. */
+    function int min(int a, int b) {
+        if (a < b) {
+            return a;
+        }
+        return b;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x < 0) {
+            return -x;
+        }
+        return x;
+    }
+}
